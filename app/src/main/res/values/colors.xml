@@ -12,4 +12,11 @@
 
     <color name="orange">#FF6E40</color>
 
+    <color name="endColor">#357a38</color>
+    <color name="centerColor">#4caf50</color>
+    <color name="startColor">#80c883</color>
+
+    <color name="green_1">#4CAF50</color>
+    <color name="btn_green">#4CAF50</color>
+    <color name="top2">#3d8b40</color>
 </resources>

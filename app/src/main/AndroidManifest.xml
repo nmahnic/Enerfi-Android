@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EnerfiV2">
-        <activity android:name=".SplashActivity"
+        <activity android:name="com.nicomahnic.enerfiv2.ui.activities.SplashActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -18,7 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name="com.nicomahnic.enerfiv2.ui.activities.MainActivity" />
     </application>
 
 </manifest>
