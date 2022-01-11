@@ -2,7 +2,6 @@ package com.nicomahnic.enerfiv2.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.preference.PreferenceManager
 import com.nicomahnic.enerfiv2.R
 
 class SplashActivity : AppCompatActivity() {
