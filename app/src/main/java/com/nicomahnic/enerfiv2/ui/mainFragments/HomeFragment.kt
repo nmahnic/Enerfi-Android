@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.preference.PreferenceManager
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.Legend.LegendForm
@@ -19,11 +21,16 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.nicomahnic.enerfiv2.R
 import com.nicomahnic.enerfiv2.databinding.FragmentHomeBinding
+import com.nicomahnic.enerfiv2.ui.mainFragments.viewmodels.HomeVM
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.ArrayList
 import kotlin.math.roundToInt
 
 
+@AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
+
+    private val viewModel: HomeVM by viewModels()
 
     private lateinit var binding: FragmentHomeBinding
 
@@ -126,6 +133,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 binding.chart.axisLeft.axisMinimum
             }
 
+            viewModel.getVoltage()
+            viewModel.voltageData.observe(viewLifecycleOwner, Observer { it ->
+                Log.d("NM", "$it")
+            } )
+
             // create a data object with the data sets
             val data = LineData(set1)
             data.setValueTextSize(9f)
@@ -166,8 +178,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val data: LineData = binding.chart.data
 
         val set = data.getDataSetByIndex(0)
+        val x = set!!.entryCount.toFloat()
+        val y = (Math.random() * 40).toFloat() + 200F
 
-        data.addEntry(Entry(set!!.entryCount.toFloat(), (Math.random() * 40).toFloat() + 200F), 0)
+        viewModel.insetVoltage(x.toInt(),y)
+
+        data.addEntry(Entry(x, y), 0)
         data.notifyDataChanged()
         updateData(data)
     }

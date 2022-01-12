@@ -3,7 +3,9 @@ package com.nicomahnic.enerfiv2.ui.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.nicomahnic.enerfiv2.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
