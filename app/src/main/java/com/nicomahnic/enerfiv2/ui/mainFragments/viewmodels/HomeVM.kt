@@ -32,17 +32,11 @@ class HomeVM @ViewModelInject constructor(
     override fun process(viewEvent: HomeEvent) {
         super.process(viewEvent)
         when (viewEvent){
-            is HomeEvent.GenerateData -> {
-//                setData(3, 40F)
-            }
             is HomeEvent.LoadData -> {
                 getVoltage()
             }
             is HomeEvent.AddPoint -> {
                 insetVoltage(viewEvent.data.x, viewEvent.data.y)
-            }
-            else -> {
-
             }
         }
     }
@@ -90,13 +84,6 @@ class HomeVM @ViewModelInject constructor(
                         }
                     }
                 }.launchIn(viewModelScope)
-        }
-    }
-
-    private fun setData(count: Int, range: Float) {
-        for (i in 0 until count) {
-            val `val` = (Math.random() * (range + 1)).toFloat() + 200
-            insetVoltage(i.toFloat(), `val`)
         }
     }
 

@@ -43,7 +43,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     }
 
     companion object {
-        private const val TIME_OUT:Long = 2000 // 2 sec
+        private const val TIME_OUT:Long = 500 // 2 sec
         fun after(delay: Long, process: () -> Unit) {
             Handler(Looper.getMainLooper()).postDelayed({
                 process()

@@ -3,7 +3,6 @@ package com.nicomahnic.enerfiv2.ui.mainFragments
 import com.github.mikephil.charting.data.Entry
 import com.nicomahnic.enerfiv2.model.Voltage
 
-
 // STATE
 data class HomeDataState(
     val exception: Exception? = null,
@@ -19,7 +18,6 @@ sealed class HomeAction {
 // VIEW EVENT
 sealed class HomeEvent {
     object LoadData: HomeEvent()
-    object GenerateData: HomeEvent()
     data class AddPoint(val data: Voltage): HomeEvent()
 }
 
