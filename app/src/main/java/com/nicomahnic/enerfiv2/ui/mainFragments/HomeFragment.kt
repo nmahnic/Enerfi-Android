@@ -3,9 +3,8 @@ package com.nicomahnic.enerfiv2.ui.mainFragments
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.SeekBar
-import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.fragment.app.Fragment
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -13,12 +12,15 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IFillFormatter
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.nicomahnic.enerfiv2.R
 import com.nicomahnic.enerfiv2.databinding.FragmentHomeBinding
 import java.util.ArrayList
+import kotlin.math.roundToInt
 
 
-class HomeFragment : Fragment(R.layout.fragment_home), OnSeekBarChangeListener{
+class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private lateinit var binding: FragmentHomeBinding
 
@@ -32,7 +34,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnSeekBarChangeListener{
         activity?.actionBar?.title = "CubicLineChart"
 
         binding.chart.setViewPortOffsets(0F,0F,0F,0F)
-        binding.chart.setBackgroundColor(Color.rgb(104, 241, 175))
+//        binding.chart.setBackgroundColor(Color.rgb(104, 241, 175))
+        binding.chart.setBackgroundColor(resources.getColor(R.color.startColor))
 
         // no description text
         binding.chart.description.isEnabled = false
@@ -63,14 +66,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnSeekBarChangeListener{
         binding.chart.axisRight.isEnabled = false
 
         // add data
-        binding.seekBarY.setOnSeekBarChangeListener(this)
-        binding.seekBarX.setOnSeekBarChangeListener(this)
+        setData(20, 40F)
 
-        // lower max, as cubic runs significantly slower than linear
-        binding.seekBarX.max = 500
-
-        binding.seekBarX.progress = 45
-        binding.seekBarY.progress = 100
+        // set listener
+        SignalChange.binding = binding
+        binding.chart.setOnChartValueSelectedListener(SignalChange)
 
         binding.chart.legend.isEnabled = false
 
@@ -83,7 +83,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnSeekBarChangeListener{
     private fun setData(count: Int, range: Float) {
         val values = ArrayList<Entry>()
         for (i in 0 until count) {
-            val `val` = (Math.random() * (range + 1)).toFloat() + 20
+            val `val` = (Math.random() * (range + 1)).toFloat() + 200
             values.add(Entry(i.toFloat(), `val`))
         }
         val set1: LineDataSet
@@ -108,7 +108,13 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnSeekBarChangeListener{
             set1.color = Color.WHITE
             set1.fillColor = Color.WHITE
             set1.fillAlpha = 100
-            set1.setDrawHorizontalHighlightIndicator(false)
+
+            set1.setDrawHorizontalHighlightIndicator(true)
+            set1.setDrawVerticalHighlightIndicator(true)
+            set1.highLightColor = resources.getColor(R.color.btn_green)
+            set1.highlightLineWidth = 2F
+            set1.enableDashedHighlightLine(20F, 10F, 0F);
+
             set1.fillFormatter = IFillFormatter { dataSet, dataProvider ->
                 binding.chart.axisLeft.axisMinimum
             }
@@ -131,18 +137,24 @@ class HomeFragment : Fragment(R.layout.fragment_home), OnSeekBarChangeListener{
         }
     }
 
-    override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-        binding.tvXMax.text = binding.seekBarX.progress.toString()
-        binding.tvYMax.text = binding.seekBarY.progress.toString()
 
-        setData(binding.seekBarX.progress, binding.seekBarY.progress.toFloat())
+    object SignalChange: OnChartValueSelectedListener {
 
-        // redraw
-        binding.chart.invalidate()
+        lateinit var binding: FragmentHomeBinding
+
+        override fun onValueSelected(e: Entry?, h: Highlight?) {
+            Log.i("Entry selected", e.toString())
+            Log.i("LOW HIGH", "low: " + binding.chart.lowestVisibleX + ", high: " + binding.chart.highestVisibleX)
+            Log.i("MIN MAX", "xMin: " + binding.chart.xChartMin + ", xMax: " + binding.chart.xChartMax + ", yMin: " + binding.chart.yChartMin + ", yMax: " + binding.chart.yChartMax)
+            binding.tvData1.text = e?.x?.roundToInt().toString()
+            val y = "%.1f".format(e?.y)
+            binding.tvData2.text = y
+        }
+
+        override fun onNothingSelected() {
+            Log.i("Entry selected", "onNothingSelected")
+        }
+
     }
-
-    override fun onStartTrackingTouch(p0: SeekBar?) {}
-
-    override fun onStopTrackingTouch(p0: SeekBar?) {}
 
 }
