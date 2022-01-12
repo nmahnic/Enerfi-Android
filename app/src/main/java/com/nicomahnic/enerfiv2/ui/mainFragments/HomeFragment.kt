@@ -89,15 +89,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.chart.animateXY(2000, 50)
 
         // add data
-        setData(100, 40F)
+        setData()
     }
 
-    private fun setData(count: Int, range: Float) {
+    private fun setData() {
         val values = ArrayList<Entry>()
-        for (i in 0 until count) {
-            val `val` = (Math.random() * (range + 1)).toFloat() + 200
-            values.add(Entry(i.toFloat(), `val`))
-        }
+        values.add(Entry(1F, 220F))
+
         val set1: LineDataSet
         if (binding.chart.data != null &&
             binding.chart.data.dataSetCount > 0
