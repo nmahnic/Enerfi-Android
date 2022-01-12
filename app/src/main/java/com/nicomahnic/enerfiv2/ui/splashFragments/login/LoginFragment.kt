@@ -1,20 +1,26 @@
-package com.nicomahnic.enerfiv2.ui.splashFragments
+package com.nicomahnic.enerfiv2.ui.splashFragments.login
 
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
 import com.nicomahnic.enerfiv2.R
 import com.nicomahnic.enerfiv2.ui.activities.MainActivity
 import com.nicomahnic.enerfiv2.databinding.FragmentLoginBinding
+import com.nicomahnic.enerfiv2.utils.core.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
-class LoginFragment : Fragment(R.layout.fragment_login) {
+@AndroidEntryPoint
+class LoginFragment : BaseFragment<LoginDataState, LoginAction, LoginEvent, LoginVM>
+    (R.layout.fragment_login)
+{
 
+    override val viewModel: LoginVM by viewModels()
     private lateinit var binding: FragmentLoginBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -22,16 +28,16 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         binding = FragmentLoginBinding.bind(view)
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        val username = prefs.getString("username","")
+        val userMail = prefs.getString("userMail","")
         val password = prefs.getString("password","")
 
         binding.btnLogin.setOnClickListener {
             val edtUsername = binding.edtUsername.text.toString()
             val edtPassword = binding.edtPassword.text.toString()
 
-            if(username == edtUsername &&
+            if(userMail == edtUsername &&
                 password == edtPassword &&
-                username.isNotBlank() &&
+                userMail.isNotBlank() &&
                 password.isNotBlank()
             ){
                 after(TIME_OUT) {
@@ -57,6 +63,14 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 process()
             }, delay)
         }
+    }
+
+    override fun renderViewState(viewState: LoginDataState) {
+//        TODO("Not yet implemented")
+    }
+
+    override fun renderViewEffect(viewEffect: LoginAction) {
+//        TODO("Not yet implemented")
     }
 
 }

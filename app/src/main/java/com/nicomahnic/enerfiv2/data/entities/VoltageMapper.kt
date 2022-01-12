@@ -9,7 +9,8 @@ class VoltageMapper @Inject constructor():
     override fun mapFromEntity(entity: VoltageEntity): Voltage {
         return Voltage(
             x = entity.x,
-            y = entity.y
+            y = entity.y,
+            mail = entity.mail
         )
     }
 
@@ -17,7 +18,8 @@ class VoltageMapper @Inject constructor():
         return VoltageEntity(
             id = 0,
             x = domainModel.x,
-            y = domainModel.y
+            y = domainModel.y,
+            mail = domainModel.mail
         )
     }
 

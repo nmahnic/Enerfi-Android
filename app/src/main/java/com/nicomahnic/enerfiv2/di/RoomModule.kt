@@ -27,4 +27,8 @@ object RoomModule {
     @Singleton
     @Provides
     fun provideVoltageDao(db: AppDatabase) = db.voltageDao()
+
+    @Singleton
+    @Provides
+    fun provideUserDao(db: AppDatabase) = db.userDao()
 }

@@ -1,4 +1,4 @@
-package com.nicomahnic.enerfiv2.ui.mainFragments.viewmodels
+package com.nicomahnic.enerfiv2.ui.mainFragments.home
 
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
@@ -7,10 +7,6 @@ import com.github.mikephil.charting.data.Entry
 import com.nicomahnic.enerfiv2.model.Voltage
 import com.nicomahnic.enerfiv2.repository.GetVoltage
 import com.nicomahnic.enerfiv2.repository.InsertVoltage
-import com.nicomahnic.enerfiv2.ui.mainFragments.HomeDataState
-import com.nicomahnic.enerfiv2.ui.mainFragments.HomeAction
-import com.nicomahnic.enerfiv2.ui.mainFragments.HomeEvent
-import com.nicomahnic.enerfiv2.ui.mainFragments.HomeState
 import com.nicomahnic.enerfiv2.utils.DataState
 import com.nicomahnic.enerfiv2.utils.core.BaseViewModel
 import kotlinx.coroutines.flow.catch
@@ -43,7 +39,7 @@ class HomeVM @ViewModelInject constructor(
 
     private fun insetVoltage(x: Float, y: Float){
         viewModelScope.launch {
-            insertVoltage.insertVoltage(Voltage(x, y))
+            insertVoltage.insertVoltage(Voltage(x, y, "MAAAASH"))
                 .catch { e -> Log.d("NM", "insertVoltage Exception: $e") }
                 .onEach { res ->
                     when(res){

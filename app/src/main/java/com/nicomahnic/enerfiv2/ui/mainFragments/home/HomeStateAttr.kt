@@ -1,4 +1,4 @@
-package com.nicomahnic.enerfiv2.ui.mainFragments
+package com.nicomahnic.enerfiv2.ui.mainFragments.home
 
 import com.github.mikephil.charting.data.Entry
 import com.nicomahnic.enerfiv2.model.Voltage

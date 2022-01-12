@@ -1,20 +1,24 @@
-package com.nicomahnic.enerfiv2.ui.splashFragments
+package com.nicomahnic.enerfiv2.ui.splashFragments.register
 
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.preference.PreferenceManager
 import com.nicomahnic.enerfiv2.R
-import com.nicomahnic.enerfiv2.databinding.FragmentLoginBinding
 import com.nicomahnic.enerfiv2.databinding.FragmentRegisterBinding
 import com.nicomahnic.enerfiv2.ui.activities.MainActivity
+import com.nicomahnic.enerfiv2.utils.core.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
+class RegisterFragment : BaseFragment<RegisterDataState, RegisterAction, RegisterEvent, RegisterVM>
+    (R.layout.fragment_register) 
+{
 
-class RegisterFragment : Fragment(R.layout.fragment_register) {
-
+    override val viewModel: RegisterVM by viewModels()
     private lateinit var binding: FragmentRegisterBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -30,7 +34,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
 
             if(edtUsername.isNotBlank() && edtPassword.isNotBlank() && edtPassword == edtVerifyPasswd){
                 with (prefs.edit()) {
-                    putString("username", edtUsername)
+                    putString("userMail", edtUsername)
                     putString("password", edtPassword)
                     apply()
                 }
@@ -49,5 +53,13 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                 process()
             }, delay)
         }
+    }
+
+    override fun renderViewState(viewState: RegisterDataState) {
+//        TODO("Not yet implemented")
+    }
+
+    override fun renderViewEffect(viewEffect: RegisterAction) {
+//        TODO("Not yet implemented")
     }
 }

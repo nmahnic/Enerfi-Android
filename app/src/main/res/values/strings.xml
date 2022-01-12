@@ -5,7 +5,7 @@
     <string name="login_user">Login User</string>
     <string name="login">Login</string>
     <string name="sign_up">Sign Up</string>
-    <string name="username">Username</string>
+    <string name="userMail">Email</string>
     <string name="password">Password</string>
     <string name="register_new_user">Register New User</string>
     <string name="register">Register</string>

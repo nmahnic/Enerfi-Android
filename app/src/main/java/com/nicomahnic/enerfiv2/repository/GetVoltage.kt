@@ -1,8 +1,6 @@
 package com.nicomahnic.enerfiv2.repository
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.nicomahnic.enerfiv2.data.entities.VoltageMapper
 import com.nicomahnic.enerfiv2.domain.VoltageDao
 import com.nicomahnic.enerfiv2.model.Voltage

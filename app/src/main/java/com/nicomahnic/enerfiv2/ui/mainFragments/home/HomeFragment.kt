@@ -1,10 +1,11 @@
-package com.nicomahnic.enerfiv2.ui.mainFragments
+package com.nicomahnic.enerfiv2.ui.mainFragments.home
 
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.preference.PreferenceManager
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.Legend.LegendForm
 import com.github.mikephil.charting.components.XAxis
@@ -18,7 +19,6 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.nicomahnic.enerfiv2.R
 import com.nicomahnic.enerfiv2.databinding.FragmentHomeBinding
 import com.nicomahnic.enerfiv2.model.Voltage
-import com.nicomahnic.enerfiv2.ui.mainFragments.viewmodels.HomeVM
 import com.nicomahnic.enerfiv2.utils.core.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.ArrayList
@@ -34,6 +34,12 @@ class HomeFragment : BaseFragment<HomeDataState, HomeAction, HomeEvent, HomeVM>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
+
+        // set listener
+        SignalChange.binding = binding
+        binding.chart.setOnChartValueSelectedListener(SignalChange)
+        binding.btnAddRandomData.setOnClickListener(clickListenerAddData)
+        binding.btnLogout.setOnClickListener(clickListenerLogout)
 
         activity?.actionBar?.title = "CubicLineChart"
 
@@ -64,11 +70,6 @@ class HomeFragment : BaseFragment<HomeDataState, HomeAction, HomeEvent, HomeVM>
         y.axisLineColor = Color.BLACK
 
         binding.chart.axisRight.isEnabled = false
-
-        // set listener
-        SignalChange.binding = binding
-        binding.chart.setOnChartValueSelectedListener(SignalChange)
-        binding.btnAddRandomData.setOnClickListener(clickListenerAddData)
 
         binding.chart.legend.isEnabled = true
 
@@ -146,9 +147,19 @@ class HomeFragment : BaseFragment<HomeDataState, HomeAction, HomeEvent, HomeVM>
 
         val x = set!!.entryCount.toFloat()
         val y = (Math.random() * 40).toFloat() + 200F
-        val point = Voltage(x,y)
+        val point = Voltage(x,y,"MAAAASH")
 
         viewModel.process(HomeEvent.AddPoint(point))
+    }
+
+    private val clickListenerLogout = View.OnClickListener {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        with(prefs.edit()) {
+            putString("userMail", "")
+            putString("password", "")
+            apply()
+        }
+        activity?.finish()
     }
 
     private fun setData(entries: List<Entry>?) {

@@ -19,11 +19,11 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         super.onViewCreated(view, savedInstanceState)
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        val username = prefs.getString("username","")
+        val userMail = prefs.getString("userMail","")
         val password = prefs.getString("password","")
 
         after(SPLASH_TIME_OUT){
-            if(username!!.isBlank() && password!!.isBlank()) {
+            if(userMail!!.isBlank() && password!!.isBlank()) {
                 val action = SplashFragmentDirections.actionSplashFragmentToLoginFragment()
                 view.findNavController().navigate(action)
             } else {

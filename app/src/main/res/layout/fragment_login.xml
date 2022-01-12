@@ -8,7 +8,7 @@ android:layout_height="match_parent"
 android:background="@color/white"
 android:orientation="vertical"
 android:padding="20dp"
-tools:context=".ui.splashFragments.LoginFragment">
+tools:context=".ui.splashFragments.login.LoginFragment">
 
     <ImageView
         android:id="@+id/imageView"
@@ -29,18 +29,18 @@ tools:context=".ui.splashFragments.LoginFragment">
         android:text="@string/login_user"
         android:textColor="@color/black"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/username"
+        app:layout_constraintBottom_toTopOf="@+id/userMail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/username"
+        android:id="@+id/userMail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginBottom="32dp"
-        android:hint="@string/username"
+        android:hint="@string/userMail"
         android:padding="5dp"
         app:layout_constraintBottom_toTopOf="@+id/password"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,7 +63,7 @@ tools:context=".ui.splashFragments.LoginFragment">
         android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username"
+        app:layout_constraintTop_toBottomOf="@+id/userMail"
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText

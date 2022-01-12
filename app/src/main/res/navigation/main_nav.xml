@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.nicomahnic.enerfiv2.ui.mainFragments.HomeFragment"
+        android:name="com.nicomahnic.enerfiv2.ui.mainFragments.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
 </navigation>
