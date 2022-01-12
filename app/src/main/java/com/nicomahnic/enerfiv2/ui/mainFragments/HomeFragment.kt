@@ -164,7 +164,7 @@ class HomeFragment : BaseFragment<HomeDataState, HomeAction, HomeEvent, HomeVM>
         } else {
             // create a dataset and give it a type
             val values = ArrayList<Entry>()
-            values.add(Entry(1F, 220F))
+            values.add(Entry(0F, 220F))
 
             set1 = if(entries!!.isEmpty()) LineDataSet(values, "Voltage") else LineDataSet(entries, "Voltage")
             set1.mode = LineDataSet.Mode.CUBIC_BEZIER
