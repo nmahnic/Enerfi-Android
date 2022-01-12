@@ -13,7 +13,7 @@ import com.nicomahnic.enerfiv2.ui.activities.MainActivity
 
 class SplashFragment : Fragment(R.layout.fragment_splash) {
 
-    private val SPLASH_TIME_OUT:Long = 5 // 2 sec
+    private val SPLASH_TIME_OUT:Long = 500 // 2 sec
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -27,8 +27,10 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
                 val action = SplashFragmentDirections.actionSplashFragmentToLoginFragment()
                 view.findNavController().navigate(action)
             } else {
-                startActivity(Intent(context, MainActivity::class.java))
-                activity?.finish()
+                after(SPLASH_TIME_OUT) {
+                    startActivity(Intent(context, MainActivity::class.java))
+                    activity?.finish()
+                }
             }
         }
     }

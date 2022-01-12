@@ -2,6 +2,8 @@ package com.nicomahnic.enerfiv2.ui.splashFragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.navigation.findNavController
@@ -32,8 +34,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 username.isNotBlank() &&
                 password.isNotBlank()
             ){
-                startActivity(Intent(context, MainActivity::class.java))
-                activity?.finish()
+                after(TIME_OUT) {
+                    startActivity(Intent(context, MainActivity::class.java))
+                    activity?.finish()
+                }
             } else {
                 Snackbar.make(view, "User/Password is incorrect, please try again", Snackbar.LENGTH_LONG).show()
             }
@@ -44,6 +48,15 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             view.findNavController().navigate(action)
         }
 
+    }
+
+    companion object {
+        private const val TIME_OUT:Long = 500 // 2 sec
+        fun after(delay: Long, process: () -> Unit) {
+            Handler(Looper.getMainLooper()).postDelayed({
+                process()
+            }, delay)
+        }
     }
 
 }
