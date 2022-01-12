@@ -1,14 +1,10 @@
 package com.nicomahnic.enerfiv2.ui.mainFragments
 
-import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.preference.PreferenceManager
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.Legend.LegendForm
 import com.github.mikephil.charting.components.XAxis
@@ -21,25 +17,22 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.nicomahnic.enerfiv2.R
 import com.nicomahnic.enerfiv2.databinding.FragmentHomeBinding
+import com.nicomahnic.enerfiv2.model.Voltage
 import com.nicomahnic.enerfiv2.ui.mainFragments.viewmodels.HomeVM
+import com.nicomahnic.enerfiv2.utils.core.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.ArrayList
-import kotlin.math.roundToInt
 
 
 @AndroidEntryPoint
-class HomeFragment : Fragment(R.layout.fragment_home) {
-
-    private val viewModel: HomeVM by viewModels()
-
+class HomeFragment : BaseFragment<HomeDataState, HomeAction, HomeEvent, HomeVM>
+    (R.layout.fragment_home)
+{
+    override val viewModel: HomeVM by viewModels()
     private lateinit var binding: FragmentHomeBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
-
-//        val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
-//        blankPasswd(prefs)
 
         activity?.actionBar?.title = "CubicLineChart"
 
@@ -88,16 +81,82 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         binding.chart.animateXY(2000, 50)
 
-        // add data
-        setData(100, 40F)
+        viewModel.process(HomeEvent.LoadData)
+//        viewModel.process(HomeEvent.GenerateData)
     }
 
-    private fun setData(count: Int, range: Float) {
-        val values = ArrayList<Entry>()
-        for (i in 0 until count) {
-            val `val` = (Math.random() * (range + 1)).toFloat() + 200
-            values.add(Entry(i.toFloat(), `val`))
+    object SignalChange : OnChartValueSelectedListener {
+
+        lateinit var binding: FragmentHomeBinding
+
+        override fun onValueSelected(e: Entry?, h: Highlight?) {
+            Log.d("NM","Entry selected $e")
+            val x = "%.1f".format(e?.x)
+            binding.tvData1.text = x
+            val y = "%.1f".format(e?.y)
+            binding.tvData2.text = y
         }
+
+        override fun onNothingSelected() {
+            Log.i("Entry selected", "onNothingSelected")
+        }
+
+    }
+
+    override fun renderViewState(viewState: HomeDataState) {
+        when (viewState.state) {
+            is HomeState.AddPointToPlot -> {
+                initChart(viewState.data)
+            }
+            is HomeState.Plot -> {
+                initChart(viewState.data)
+            }
+            else -> {
+
+            }
+        }
+    }
+
+    override fun renderViewEffect(viewEffect: HomeAction) {
+        when (viewEffect) {
+            is HomeAction.OK -> {
+
+            }
+            else -> {
+
+            }
+        }
+    }
+
+    private fun updateData(data: LineData){
+        binding.chart.notifyDataSetChanged()
+        binding.chart.data = data
+        binding.chart.setVisibleXRangeMaximum(30F)
+        binding.chart.moveViewToX(data.entryCount.toFloat())
+        binding.chart.invalidate()
+    }
+
+    private fun addPointToPlot(entry: Entry) {
+        Log.d("NM","onClickListener")
+        val data: LineData = binding.chart.data
+
+        data.addEntry(entry, 0)
+        data.notifyDataChanged()
+        updateData(data)
+    }
+
+    private val clickListenerAddData = View.OnClickListener {
+        val data: LineData = binding.chart.data
+        val set = data.getDataSetByIndex(0)
+
+        val x = set!!.entryCount.toFloat()
+        val y = (Math.random() * 40).toFloat() + 20F
+        val point = Voltage(x,y)
+
+        viewModel.process(HomeEvent.AddPoint(point))
+    }
+
+    private fun initChart(values: List<Entry>? = null) {
         val set1: LineDataSet
         if (binding.chart.data != null &&
             binding.chart.data.dataSetCount > 0
@@ -107,8 +166,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             binding.chart.data.notifyDataChanged()
             binding.chart.notifyDataSetChanged()
         } else {
-            // create a dataset and give it a type
-            set1 = LineDataSet(values, "Voltage")
+            set1 = LineDataSet(listOf<Entry>(), "Voltage")
             set1.mode = LineDataSet.Mode.CUBIC_BEZIER
             set1.cubicIntensity = 0.2f
             set1.setDrawFilled(true)
@@ -132,76 +190,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             set1.fillFormatter = IFillFormatter { dataSet, dataProvider ->
                 binding.chart.axisLeft.axisMinimum
             }
-
-            viewModel.getVoltage()
-            viewModel.voltageData.observe(viewLifecycleOwner, Observer { it ->
-                Log.d("NM", "$it")
-            } )
-
-            // create a data object with the data sets
-            val data = LineData(set1)
-            data.setValueTextSize(9f)
-            data.setDrawValues(false)
-
-            updateData(data)
-        }
-    }
-
-    private fun blankPasswd(prefs: SharedPreferences) {
-        with(prefs.edit()) {
-            putString("username", "")
-            putString("password", "")
-            apply()
-        }
-    }
-
-
-    object SignalChange : OnChartValueSelectedListener {
-
-        lateinit var binding: FragmentHomeBinding
-
-        override fun onValueSelected(e: Entry?, h: Highlight?) {
-            Log.d("NM","Entry selected $e")
-            binding.tvData1.text = e?.x?.roundToInt().toString()
-            val y = "%.1f".format(e?.y)
-            binding.tvData2.text = y
         }
 
-        override fun onNothingSelected() {
-            Log.i("Entry selected", "onNothingSelected")
-        }
+        // create a data object with the data sets
+        val data = LineData(set1)
+        data.setValueTextSize(9f)
+        data.setDrawValues(false)
 
-    }
-
-    private val clickListenerAddData = View.OnClickListener {
-        Log.d("NM","onClickListener")
-        val data: LineData = binding.chart.data
-
-        val set = data.getDataSetByIndex(0)
-        val x = set!!.entryCount.toFloat()
-        val y = (Math.random() * 40).toFloat() + 200F
-
-        viewModel.insetVoltage(x.toInt(),y)
-
-        data.addEntry(Entry(x, y), 0)
-        data.notifyDataChanged()
         updateData(data)
-    }
 
-    private fun updateData(data: LineData){
-        // let the chart know it's data has changed
-        binding.chart.notifyDataSetChanged()
-
-        // set data
-        binding.chart.data = data
-
-        // limit the number of visible entries
-        binding.chart.setVisibleXRangeMaximum(30F)
-
-        // move to the latest entry
-        binding.chart.moveViewToX(data.entryCount.toFloat())
-
-        // don't forget to refresh the drawing
-        binding.chart.invalidate()
     }
 }

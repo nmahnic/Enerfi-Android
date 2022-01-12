@@ -2,6 +2,8 @@ package com.nicomahnic.enerfiv2.ui.splashFragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.preference.PreferenceManager
@@ -32,9 +34,20 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                     putString("password", edtPassword)
                     apply()
                 }
-                startActivity(Intent(context, MainActivity::class.java))
-                activity?.finish()
+                after(TIME_OUT) {
+                    startActivity(Intent(context, MainActivity::class.java))
+                    activity?.finish()
+                }
             }
+        }
+    }
+
+    companion object {
+        private const val TIME_OUT:Long = 2000 // 2 sec
+        fun after(delay: Long, process: () -> Unit) {
+            Handler(Looper.getMainLooper()).postDelayed({
+                process()
+            }, delay)
         }
     }
 }

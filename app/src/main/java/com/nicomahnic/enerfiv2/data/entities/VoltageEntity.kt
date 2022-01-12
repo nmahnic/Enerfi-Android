@@ -7,6 +7,6 @@ import androidx.room.PrimaryKey
 data class VoltageEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val x: Int,
+    val x: Float,
     val y: Float
 )

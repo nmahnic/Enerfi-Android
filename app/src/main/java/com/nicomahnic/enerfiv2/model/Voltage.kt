@@ -1,6 +1,6 @@
 package com.nicomahnic.enerfiv2.model
 
 data class Voltage(
-    val x: Int,
+    val x: Float,
     val y: Float
 )
