@@ -31,8 +31,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
 
-        val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        blankPasswd(prefs)
+//        val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+//        blankPasswd(prefs)
 
         activity?.actionBar?.title = "CubicLineChart"
 
