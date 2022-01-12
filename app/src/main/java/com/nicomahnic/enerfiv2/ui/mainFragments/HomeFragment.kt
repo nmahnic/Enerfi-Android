@@ -2,10 +2,14 @@ package com.nicomahnic.enerfiv2.ui.mainFragments
 
 import android.content.SharedPreferences
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.Legend.LegendForm
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
@@ -14,6 +18,7 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IFillFormatter
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import com.github.mikephil.charting.utils.Utils
 import com.nicomahnic.enerfiv2.R
 import com.nicomahnic.enerfiv2.databinding.FragmentHomeBinding
 import java.util.ArrayList
@@ -33,11 +38,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         activity?.actionBar?.title = "CubicLineChart"
 
-        binding.chart.setViewPortOffsets(0F, 0F, 0F, 0F)
-        binding.chart.setBackgroundColor(resources.getColor(R.color.startColor))
-
         // no description text
-        binding.chart.description.isEnabled = false
+        binding.chart.description.isEnabled = true
+        binding.chart.description.text = "by Enerfi"
 
         // enable touch gestures
         binding.chart.setTouchEnabled(true)
@@ -50,7 +53,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.chart.setPinchZoom(false)
 
         binding.chart.setDrawGridBackground(false)
-        binding.chart.maxHighlightDistance = 300f
 
         val x: XAxis = binding.chart.xAxis
         x.isEnabled = false
@@ -58,28 +60,31 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val y: YAxis = binding.chart.axisLeft
         y.setLabelCount(6, false)
         y.textColor = Color.BLACK
-        y.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART)
+        y.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
         y.setDrawGridLines(false)
         y.axisLineColor = Color.BLACK
-        y.axisMinimum = 0F
-        y.axisMaximum = 300F
+//        y.axisMinimum = 0F
+//        y.axisMaximum = 300F
 
         binding.chart.axisRight.isEnabled = false
-
-        // add data
-        setData(100, 40F)
 
         // set listener
         SignalChange.binding = binding
         binding.chart.setOnChartValueSelectedListener(SignalChange)
         binding.btnAddRandomData.setOnClickListener(clickListenerAddData)
 
-        binding.chart.legend.isEnabled = false
+        binding.chart.legend.isEnabled = true
+
+        // get the legend (only possible after setting data)
+        val l: Legend = binding.chart.getLegend()
+
+        // draw legend entries as lines
+        l.form = LegendForm.LINE
 
         binding.chart.animateXY(2000, 50)
 
-        // don't forget to refresh the drawing
-        binding.chart.invalidate()
+        // add data
+        setData(100, 40F)
     }
 
     private fun setData(count: Int, range: Float) {
@@ -98,16 +103,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             binding.chart.notifyDataSetChanged()
         } else {
             // create a dataset and give it a type
-            set1 = LineDataSet(values, "DataSet 1")
+            set1 = LineDataSet(values, "Voltage")
             set1.mode = LineDataSet.Mode.CUBIC_BEZIER
             set1.cubicIntensity = 0.2f
             set1.setDrawFilled(true)
             set1.setDrawCircles(false)
-            set1.lineWidth = 1.8f
-            set1.circleRadius = 4f
-            set1.setCircleColor(Color.WHITE)
-            set1.highLightColor = Color.rgb(244, 117, 117)
-            set1.color = Color.WHITE
+
+            set1.color = resources.getColor(R.color.endColor)
             set1.fillColor = Color.WHITE
             set1.fillAlpha = 100
 
@@ -115,7 +117,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             set1.setDrawVerticalHighlightIndicator(true)
             set1.highLightColor = resources.getColor(R.color.btn_green)
             set1.highlightLineWidth = 2F
+
+            // draw selection line as dashed
             set1.enableDashedHighlightLine(20F, 10F, 0F);
+
+            // set color of filled area
+            set1.fillColor = resources.getColor(R.color.startColor)
 
             set1.fillFormatter = IFillFormatter { dataSet, dataProvider ->
                 binding.chart.axisLeft.axisMinimum
@@ -126,14 +133,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             data.setValueTextSize(9f)
             data.setDrawValues(false)
 
-            // set data
-            binding.chart.data = data
-
-            // limit the number of visible entries
-            binding.chart.setVisibleXRangeMaximum(30F)
-
-            // move to the latest entry
-            binding.chart.moveViewToX(data.entryCount.toFloat())
+            updateData(data)
         }
     }
 
@@ -151,15 +151,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         lateinit var binding: FragmentHomeBinding
 
         override fun onValueSelected(e: Entry?, h: Highlight?) {
-            Log.i("Entry selected", e.toString())
-            Log.i(
-                "LOW HIGH",
-                "low: " + binding.chart.lowestVisibleX + ", high: " + binding.chart.highestVisibleX
-            )
-            Log.i(
-                "MIN MAX",
-                "xMin: " + binding.chart.xChartMin + ", xMax: " + binding.chart.xChartMax + ", yMin: " + binding.chart.yChartMin + ", yMax: " + binding.chart.yChartMax
-            )
+            Log.d("NM","Entry selected $e")
             binding.tvData1.text = e?.x?.roundToInt().toString()
             val y = "%.1f".format(e?.y)
             binding.tvData2.text = y
@@ -177,12 +169,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         val set = data.getDataSetByIndex(0)
 
-        data.addEntry(
-            Entry(set!!.entryCount.toFloat(), (Math.random() * 40).toFloat() + 200F),
-            0
-        )
+        data.addEntry(Entry(set!!.entryCount.toFloat(), (Math.random() * 40).toFloat() + 200F), 0)
         data.notifyDataChanged()
+        updateData(data)
+    }
 
+    private fun updateData(data: LineData){
         // let the chart know it's data has changed
         binding.chart.notifyDataSetChanged()
 
@@ -197,6 +189,5 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         // don't forget to refresh the drawing
         binding.chart.invalidate()
-
     }
 }
