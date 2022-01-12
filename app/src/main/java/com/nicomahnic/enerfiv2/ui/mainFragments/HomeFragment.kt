@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceManager
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.Legend.LegendForm
 import com.github.mikephil.charting.components.XAxis
@@ -30,8 +31,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
 
-//        val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
-//        blankPasswd(prefs)
+        val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        blankPasswd(prefs)
 
         activity?.actionBar?.title = "CubicLineChart"
 
