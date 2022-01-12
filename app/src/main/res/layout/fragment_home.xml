@@ -9,7 +9,7 @@
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/chart"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="300dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -51,6 +51,16 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         app:layout_constraintStart_toEndOf="@+id/tv_data2_legend"
         app:layout_constraintTop_toBottomOf="@+id/tv_data1" />
+
+    <Button
+        android:id="@+id/btn_add_random_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Random Data"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chart" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

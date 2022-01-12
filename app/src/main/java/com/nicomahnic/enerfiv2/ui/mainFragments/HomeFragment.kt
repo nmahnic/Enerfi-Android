@@ -33,8 +33,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         activity?.actionBar?.title = "CubicLineChart"
 
-        binding.chart.setViewPortOffsets(0F,0F,0F,0F)
-//        binding.chart.setBackgroundColor(Color.rgb(104, 241, 175))
+        binding.chart.setViewPortOffsets(0F, 0F, 0F, 0F)
         binding.chart.setBackgroundColor(resources.getColor(R.color.startColor))
 
         // no description text
@@ -58,23 +57,26 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         val y: YAxis = binding.chart.axisLeft
         y.setLabelCount(6, false)
-        y.textColor = Color.WHITE
+        y.textColor = Color.BLACK
         y.setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART)
         y.setDrawGridLines(false)
-        y.axisLineColor = Color.WHITE
+        y.axisLineColor = Color.BLACK
+        y.axisMinimum = 0F
+        y.axisMaximum = 300F
 
         binding.chart.axisRight.isEnabled = false
 
         // add data
-        setData(20, 40F)
+        setData(100, 40F)
 
         // set listener
         SignalChange.binding = binding
         binding.chart.setOnChartValueSelectedListener(SignalChange)
+        binding.btnAddRandomData.setOnClickListener(clickListenerAddData)
 
         binding.chart.legend.isEnabled = false
 
-        binding.chart.animateXY(2000, 2000)
+        binding.chart.animateXY(2000, 50)
 
         // don't forget to refresh the drawing
         binding.chart.invalidate()
@@ -126,11 +128,17 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
             // set data
             binding.chart.data = data
+
+            // limit the number of visible entries
+            binding.chart.setVisibleXRangeMaximum(30F)
+
+            // move to the latest entry
+            binding.chart.moveViewToX(data.entryCount.toFloat())
         }
     }
 
-    private fun blankPasswd(prefs: SharedPreferences){
-        with (prefs.edit()) {
+    private fun blankPasswd(prefs: SharedPreferences) {
+        with(prefs.edit()) {
             putString("username", "")
             putString("password", "")
             apply()
@@ -138,14 +146,20 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
 
-    object SignalChange: OnChartValueSelectedListener {
+    object SignalChange : OnChartValueSelectedListener {
 
         lateinit var binding: FragmentHomeBinding
 
         override fun onValueSelected(e: Entry?, h: Highlight?) {
             Log.i("Entry selected", e.toString())
-            Log.i("LOW HIGH", "low: " + binding.chart.lowestVisibleX + ", high: " + binding.chart.highestVisibleX)
-            Log.i("MIN MAX", "xMin: " + binding.chart.xChartMin + ", xMax: " + binding.chart.xChartMax + ", yMin: " + binding.chart.yChartMin + ", yMax: " + binding.chart.yChartMax)
+            Log.i(
+                "LOW HIGH",
+                "low: " + binding.chart.lowestVisibleX + ", high: " + binding.chart.highestVisibleX
+            )
+            Log.i(
+                "MIN MAX",
+                "xMin: " + binding.chart.xChartMin + ", xMax: " + binding.chart.xChartMax + ", yMin: " + binding.chart.yChartMin + ", yMax: " + binding.chart.yChartMax
+            )
             binding.tvData1.text = e?.x?.roundToInt().toString()
             val y = "%.1f".format(e?.y)
             binding.tvData2.text = y
@@ -157,4 +171,32 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     }
 
+    private val clickListenerAddData = View.OnClickListener {
+        Log.d("NM","onClickListener")
+        val data: LineData = binding.chart.data
+
+        val set = data.getDataSetByIndex(0)
+
+        data.addEntry(
+            Entry(set!!.entryCount.toFloat(), (Math.random() * 40).toFloat() + 200F),
+            0
+        )
+        data.notifyDataChanged()
+
+        // let the chart know it's data has changed
+        binding.chart.notifyDataSetChanged()
+
+        // set data
+        binding.chart.data = data
+
+        // limit the number of visible entries
+        binding.chart.setVisibleXRangeMaximum(30F)
+
+        // move to the latest entry
+        binding.chart.moveViewToX(data.entryCount.toFloat())
+
+        // don't forget to refresh the drawing
+        binding.chart.invalidate()
+
+    }
 }
