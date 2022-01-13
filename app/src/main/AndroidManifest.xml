@@ -25,7 +25,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.nicomahnic.enerfiv2.ui.activities.MainActivity" />
+        <activity
+            android:name="com.nicomahnic.enerfiv2.ui.activities.MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.EnerfiV2.NoActionBar"/>
     </application>
 
 </manifest>
