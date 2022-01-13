@@ -15,7 +15,7 @@ class InsertUser @Inject constructor(
     private val userMapper: UserMapper
 ) {
 
-    suspend fun insertUser(user: User) : Flow<DataState<String>> = flow {
+    suspend fun task(user: User) : Flow<DataState<String>> = flow {
         Log.d("NM", "insertUser llegue")
         try {
             userDao.insertUser(userMapper.mapToEntity(user))

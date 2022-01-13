@@ -1,4 +1,4 @@
-package com.nicomahnic.enerfiv2.ui.splashFragments
+package com.nicomahnic.enerfiv2.ui.splashFragments.splash
 
 import android.content.Intent
 import android.os.Bundle

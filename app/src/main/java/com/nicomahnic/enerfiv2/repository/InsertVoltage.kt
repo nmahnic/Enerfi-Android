@@ -15,7 +15,7 @@ class InsertVoltage @Inject constructor(
     private val voltageMapper: VoltageMapper
 ) {
 
-    suspend fun insertVoltage(voltage: Voltage) : Flow<DataState<String>> = flow {
+    suspend fun task(voltage: Voltage) : Flow<DataState<String>> = flow {
         Log.d("NM", "insertVoltage llegue")
         try {
             voltageDao.insertVoltageValue(voltageMapper.mapToEntity(voltage))

@@ -119,7 +119,7 @@ class HomeFragment : BaseFragment<HomeDataState, HomeAction, HomeEvent, HomeVM>
     override fun renderViewEffect(viewEffect: HomeAction) {
         when (viewEffect) {
             is HomeAction.OK -> {
-
+                Log.d("NM", "$viewEffect")
             }
         }
     }

@@ -11,16 +11,16 @@ import java.lang.Exception
 import javax.inject.Inject
 
 
-class GetUsers @Inject constructor(
+class GetUsersByEmail @Inject constructor(
     private val userDao: UserDao,
     private val userMapper: UserMapper
 ) {
 
-    suspend fun task() : Flow<DataState<List<User>>> = flow {
+    suspend fun task(mail : String) : Flow<DataState<List<User>>> = flow {
         Log.d("NM", "getUser llegue")
         try {
             val res = mutableListOf<User>()
-            val resEntity = userDao.getAllUsers()
+            val resEntity = userDao.getUserByEmail(mail)
             resEntity.forEach { res.add(userMapper.mapFromEntity(it)) }
             emit(DataState.Success(res))
         } catch (e: Exception){

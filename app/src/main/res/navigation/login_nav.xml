@@ -21,7 +21,7 @@
         tools:layout="@layout/fragment_register" />
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.nicomahnic.enerfiv2.ui.splashFragments.SplashFragment"
+        android:name="com.nicomahnic.enerfiv2.ui.splashFragments.splash.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action

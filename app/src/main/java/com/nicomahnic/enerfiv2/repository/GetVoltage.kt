@@ -16,7 +16,7 @@ class GetVoltage @Inject constructor(
     private val voltageMapper: VoltageMapper
 ) {
 
-    suspend fun getVoltage() : Flow<DataState<List<Voltage>>> = flow {
+    suspend fun task() : Flow<DataState<List<Voltage>>> = flow {
         Log.d("NM", "getVoltage llegue")
         try {
             val res = mutableListOf<Voltage>()

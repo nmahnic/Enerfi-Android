@@ -1,6 +1,8 @@
 package com.nicomahnic.enerfiv2.ui.splashFragments.login
 
 import com.github.mikephil.charting.data.Entry
+import com.nicomahnic.enerfiv2.model.Voltage
+import com.nicomahnic.enerfiv2.ui.mainFragments.home.HomeEvent
 
 // STATE
 data class LoginDataState(
@@ -16,11 +18,16 @@ sealed class LoginAction {
 
 // VIEW EVENT
 sealed class LoginEvent {
-    object LoadData: LoginEvent()
+    object Register : LoginEvent()
+    object GoToHome: LoginEvent()
+    data class Validate(val mail: String, val passwd: String, val spMail: String, val spPasswd: String): LoginEvent()
 }
 
 // VIEW STATE
 sealed class LoginState {
     object Initial : LoginState()
-    object Plot : LoginState()
+    object Validated : LoginState()
+    object NotValidated : LoginState()
+    object GoToRegister : LoginState()
+    object GoToHome : LoginState()
 }

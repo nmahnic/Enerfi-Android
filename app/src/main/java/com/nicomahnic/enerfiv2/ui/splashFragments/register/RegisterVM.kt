@@ -3,9 +3,11 @@ package com.nicomahnic.enerfiv2.ui.splashFragments.register
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
+import com.github.mikephil.charting.data.Entry
 import com.nicomahnic.enerfiv2.model.User
 import com.nicomahnic.enerfiv2.repository.GetUsers
 import com.nicomahnic.enerfiv2.repository.InsertUser
+import com.nicomahnic.enerfiv2.ui.mainFragments.home.HomeState
 import com.nicomahnic.enerfiv2.utils.DataState
 import com.nicomahnic.enerfiv2.utils.core.BaseViewModel
 import kotlinx.coroutines.flow.catch
@@ -27,10 +29,20 @@ class RegisterVM @ViewModelInject constructor(
     override fun process(viewEvent: RegisterEvent) {
         super.process(viewEvent)
         when (viewEvent){
-            is RegisterEvent.LoadData -> {
-                getUser()
+            is RegisterEvent.Validate -> {
+                viewState = if (viewEvent.mail.isNotBlank() && viewEvent.passwd == viewEvent.verifyPasswd && viewEvent.passwd.isNotBlank()){
+                    viewState.copy(
+                        state = RegisterState.Validated,
+                        mail = viewEvent.mail,
+                        passwd = viewEvent.passwd
+                    )
+                }else{
+                    viewState.copy(
+                        state = RegisterState.NotValidated
+                    )
+                }
             }
-            is RegisterEvent.AddPoint -> {
+            is RegisterEvent.Register -> {
                 insetUser(viewEvent.mail, viewEvent.passwd)
             }
         }
@@ -38,15 +50,21 @@ class RegisterVM @ViewModelInject constructor(
 
     private fun insetUser(mail: String, passwd: String){
         viewModelScope.launch {
-            insertUser.insertUser(User(mail, passwd))
+            insertUser.task(User(mail))
                 .catch { e -> Log.d("NM", "insertUser Exception: $e") }
                 .onEach { res ->
                     when(res){
                         is DataState.Success -> {
                             Log.d("NM", "insertUser Success: ${res.data}")
+                            viewState = viewState.copy(
+                                state = RegisterState.Registered
+                            )
                         }
                         is DataState.Failure -> {
                             Log.d("NM", "insertUser Failure: ${res.exception}")
+                            viewState = viewState.copy(
+                                state = RegisterState.NotValidated
+                            )
                         }
                     }
                 }.launchIn(viewModelScope)
@@ -55,7 +73,7 @@ class RegisterVM @ViewModelInject constructor(
 
     private fun getUser() {
         viewModelScope.launch {
-            getUsers.getUser()
+            getUsers.task()
                 .catch { e -> Log.d("NM", "getUser Exception: $e") }
                 .onEach { res ->
                     when(res){

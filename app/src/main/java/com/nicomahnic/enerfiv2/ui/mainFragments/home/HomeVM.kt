@@ -39,7 +39,7 @@ class HomeVM @ViewModelInject constructor(
 
     private fun insetVoltage(x: Float, y: Float){
         viewModelScope.launch {
-            insertVoltage.insertVoltage(Voltage(x, y, "MAAAASH"))
+            insertVoltage.task(Voltage(x, y, "MAAAASH"))
                 .catch { e -> Log.d("NM", "insertVoltage Exception: $e") }
                 .onEach { res ->
                     when(res){
@@ -60,7 +60,7 @@ class HomeVM @ViewModelInject constructor(
 
     private fun getVoltage() {
         viewModelScope.launch {
-            getVoltage.getVoltage()
+            getVoltage.task()
                 .catch { e -> Log.d("NM", "getVoltage Exception: $e") }
                 .onEach { res ->
                     when(res){
