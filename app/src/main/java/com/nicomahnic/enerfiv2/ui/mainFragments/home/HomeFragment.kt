@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.preference.PreferenceManager
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.Legend.LegendForm
@@ -19,6 +20,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.nicomahnic.enerfiv2.R
 import com.nicomahnic.enerfiv2.databinding.FragmentHomeBinding
 import com.nicomahnic.enerfiv2.model.Voltage
+import com.nicomahnic.enerfiv2.ui.splashFragments.login.LoginFragmentDirections
 import com.nicomahnic.enerfiv2.utils.core.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.ArrayList
@@ -30,16 +32,19 @@ class HomeFragment : BaseFragment<HomeDataState, HomeAction, HomeEvent, HomeVM>
 {
     override val viewModel: HomeVM by viewModels()
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var v: View
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
+        v = view
 
         // set listener
         SignalChange.binding = binding
         binding.chart.setOnChartValueSelectedListener(SignalChange)
         binding.btnAddRandomData.setOnClickListener(clickListenerAddData)
         binding.btnLogout.setOnClickListener(clickListenerLogout)
+        binding.btnConnect.setOnClickListener(clickListenerConnect)
 
         activity?.actionBar?.title = "CubicLineChart"
 
@@ -160,6 +165,11 @@ class HomeFragment : BaseFragment<HomeDataState, HomeAction, HomeEvent, HomeVM>
             apply()
         }
         activity?.finish()
+    }
+
+    private val clickListenerConnect = View.OnClickListener {
+        val action = HomeFragmentDirections.actionHomeFragmentToDeviceRegisterFragment()
+        v.findNavController().navigate(action)
     }
 
     private fun setData(entries: List<Entry>?) {

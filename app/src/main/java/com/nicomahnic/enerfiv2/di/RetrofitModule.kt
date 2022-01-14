@@ -2,6 +2,12 @@ package com.nicomahnic.enerfiv2.di
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.nicomahnic.enerfiv2.apis.apiESP.ApiHelper
+import com.nicomahnic.enerfiv2.apis.apiESP.ApiHelperImpl
+import com.nicomahnic.enerfiv2.apis.apiESP.ApiService
+import com.nicomahnic.enerfiv2.apis.apiServer.ServerHelper
+import com.nicomahnic.enerfiv2.apis.apiServer.ServerHelperImpl
+import com.nicomahnic.enerfiv2.apis.apiServer.ServerService
 import com.nicomahnic.enerfiv2.utils.Constants
 import dagger.Module
 import dagger.Provides
@@ -41,9 +47,40 @@ object RetrofitModule {
     @Named("ESP32")
     fun provideESPRetrofit(gson: Gson, okHttpClient: OkHttpClient.Builder): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl(Constants.BASE_ESP_URL)
             .client(okHttpClient.build())
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }
+
+    @Provides
+    @Singleton
+    fun provideESPService(@Named("ESP32")retrofit: Retrofit): ApiService = retrofit.create(
+        ApiService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideESPHelper(apiHelper: ApiHelperImpl): ApiHelper = apiHelper
+
+    @Singleton
+    @Provides
+    @Named("Server")
+    fun provideServerRetrofit(gson: Gson, okHttpClient: OkHttpClient.Builder): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(Constants.SERVER_URL)
+            .client(okHttpClient.build())
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideServerService(@Named("Server")retrofit: Retrofit): ServerService = retrofit.create(
+        ServerService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideServerHelper(serverHelper: ServerHelperImpl): ServerHelper = serverHelper
+
+
 }

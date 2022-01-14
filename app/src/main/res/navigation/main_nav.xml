@@ -9,5 +9,14 @@
         android:id="@+id/homeFragment"
         android:name="com.nicomahnic.enerfiv2.ui.mainFragments.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_deviceRegisterFragment"
+            app:destination="@id/deviceRegisterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/deviceRegisterFragment"
+        android:name="com.nicomahnic.enerfiv2.ui.mainFragments.deviceregister.DeviceRegisterFragment"
+        android:label="fragment_device_register"
+        tools:layout="@layout/fragment_device_register" />
 </navigation>
