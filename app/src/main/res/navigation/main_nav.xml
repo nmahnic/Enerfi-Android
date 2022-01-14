@@ -3,11 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/plot">
 
     <fragment
-        android:id="@+id/homeFragment"
+        android:id="@+id/plot"
         android:name="com.nicomahnic.enerfiv2.ui.mainFragments.home.HomeFragment"
-        android:label="fragment_home"
+        android:label="@string/base_plot"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/deviceRegisterFragment"
+        android:name="com.nicomahnic.enerfiv2.ui.mainFragments.deviceregister.DeviceRegisterFragment"
+        android:label="@string/devices"
+        tools:layout="@layout/fragment_device_register" />
+    <fragment
+        android:id="@+id/rvDevicesFragment"
+        android:name="com.nicomahnic.enerfiv2.ui.mainFragments.rvdevices.RvDevicesFragment"
+        android:label="@string/rv_devices"
+        tools:layout="@layout/fragment_rv_devices" />
 </navigation>
