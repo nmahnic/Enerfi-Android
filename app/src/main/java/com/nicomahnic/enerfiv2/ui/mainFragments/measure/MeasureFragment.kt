@@ -44,6 +44,7 @@ class MeasureFragment : BaseFragment<MeasureDataState, MeasureAction, MeasureEve
         binding.btnAddRandomData.setOnClickListener(clickListenerAddData)
         binding.btnLogout.setOnClickListener(clickListenerLogout)
         binding.btnConnect.setOnClickListener(clickListenerConnect)
+        binding.btnDevices.setOnClickListener(clickListenerDevices)
 
         activity?.actionBar?.title = "CubicLineChart"
 
@@ -168,6 +169,11 @@ class MeasureFragment : BaseFragment<MeasureDataState, MeasureAction, MeasureEve
 
     private val clickListenerConnect = View.OnClickListener {
         val action = MeasureFragmentDirections.actionMeasureFragmentToDeviceRegisterFragment()
+        v.findNavController().navigate(action)
+    }
+
+    private val clickListenerDevices = View.OnClickListener {
+        val action = MeasureFragmentDirections.actionMeasureFragmentToHomeFragment()
         v.findNavController().navigate(action)
     }
 
