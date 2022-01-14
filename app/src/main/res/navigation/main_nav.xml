@@ -8,18 +8,18 @@
     <fragment
         android:id="@+id/measureFragment"
         android:name="com.nicomahnic.enerfiv2.ui.mainFragments.measure.MeasureFragment"
-        android:label="fragment_measure"
+        android:label="Measure"
         tools:layout="@layout/fragment_measure" />
 
     <fragment
         android:id="@+id/deviceRegisterFragment"
         android:name="com.nicomahnic.enerfiv2.ui.mainFragments.deviceregister.DeviceRegisterFragment"
-        android:label="fragment_device_register"
+        android:label="Device Registration"
         tools:layout="@layout/fragment_device_register" />
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.nicomahnic.enerfiv2.ui.mainFragments.home.HomeFragment"
-        android:label="fragment_home"
+        android:label="Home"
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_measureFragment"
@@ -29,7 +29,7 @@
     <fragment
         android:id="@+id/logoutFragment"
         android:name="com.nicomahnic.enerfiv2.ui.mainFragments.logout.LogoutFragment"
-        android:label="fragment_temp_menu"
+        android:label="Logout"
         tools:layout="@layout/fragment_logout" />
 
 </navigation>
