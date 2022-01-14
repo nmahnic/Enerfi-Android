@@ -3,10 +3,14 @@ package com.nicomahnic.enerfiv2.ui.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.nicomahnic.enerfiv2.R
 import com.nicomahnic.enerfiv2.databinding.ActivityMainBinding
+import com.nicomahnic.enerfiv2.ui.mainFragments.deviceregister.DeviceRegisterFragment
+import com.nicomahnic.enerfiv2.ui.mainFragments.home.HomeFragment
+import com.nicomahnic.enerfiv2.ui.mainFragments.logout.LogoutFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -21,15 +25,35 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.bottomMenu.setOnItemSelectedListener { id ->
-            val option = when (id) {
-                R.id.home -> "Home"
-                R.id.favorites -> "Favorites"
-                R.id.settings -> "Settings"
-                else -> "Known"
+            when (id) {
+                R.id.home -> {
+                    val fragment = HomeFragment.newInstance()
+                    openFragment(fragment)
+                    Log.d("NM", "MENU -> first: HOME")
+                }
+                R.id.favorites -> {
+                    val fragment = LogoutFragment.newInstance()
+                    openFragment(fragment)
+                    Log.d("NM", "MENU -> first:LOGOUT")
+                }
+                R.id.settings -> {
+                    val fragment = DeviceRegisterFragment.newInstance()
+                    openFragment(fragment)
+                    Log.d("NM", "MENU -> first:SETTINGS")
+                }
+                else -> {
+                    Log.d("NM", "MENU -> first: UNKNOWN ${id}")
+                    false
+                }
             }
-
-            Log.d("NM", "MENU -> first:${option}")
-
+            binding.bottomMenu.setItemSelected(R.id.homeFragment)
         }
+    }
+
+    private fun openFragment(fragment: Fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 }

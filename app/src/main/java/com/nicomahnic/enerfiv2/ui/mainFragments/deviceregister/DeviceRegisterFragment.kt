@@ -23,6 +23,10 @@ class DeviceRegisterFragment : BaseFragment<DeviceRegisterDataState, DeviceRegis
     R.layout.fragment_device_register
 ) {
 
+    companion object{
+        fun newInstance(): DeviceRegisterFragment = DeviceRegisterFragment()
+    }
+
     override val viewModel: DeviceRegisterVM by viewModels()
     private lateinit var binding: FragmentDeviceRegisterBinding
 

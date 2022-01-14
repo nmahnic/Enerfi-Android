@@ -7,11 +7,16 @@ import androidx.navigation.findNavController
 import androidx.preference.PreferenceManager
 import com.nicomahnic.enerfiv2.R
 import com.nicomahnic.enerfiv2.databinding.FragmentLogoutBinding
+import com.nicomahnic.enerfiv2.ui.mainFragments.home.HomeFragment
 
 class LogoutFragment : Fragment(R.layout.fragment_logout) {
 
     private lateinit var binding : FragmentLogoutBinding
     private lateinit var v : View
+
+    companion object{
+        fun newInstance(): LogoutFragment = LogoutFragment()
+    }
 
     override fun onViewCreated (view: View, savedInstanceState: Bundle?) {
         v = view

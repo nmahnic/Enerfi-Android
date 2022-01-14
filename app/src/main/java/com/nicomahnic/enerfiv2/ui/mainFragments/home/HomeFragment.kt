@@ -8,6 +8,7 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nicomahnic.enerfiv2.R
 import com.nicomahnic.enerfiv2.databinding.FragmentHomeBinding
+import com.nicomahnic.enerfiv2.ui.mainFragments.deviceregister.DeviceRegisterFragment
 import com.nicomahnic.enerfiv2.ui.mainFragments.home.model.Device
 import com.nicomahnic.enerfiv2.ui.mainFragments.home.model.DevicesProvider
 import com.nicomahnic.enerfiv2.utils.core.BaseFragment
@@ -18,6 +19,10 @@ class HomeFragment : BaseFragment<HomeDataState, HomeAction, HomeEvent, HomeVM>(
     override val viewModel: HomeVM by viewModels()
     private lateinit var binding: FragmentHomeBinding
     private lateinit var v: View
+
+    companion object{
+        fun newInstance(): HomeFragment = HomeFragment()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
