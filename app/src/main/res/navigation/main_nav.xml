@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
-    app:startDestination="@id/tempMenuFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/measureFragment"
@@ -27,16 +27,9 @@
     </fragment>
 
     <fragment
-        android:id="@+id/tempMenuFragment"
-        android:name="com.nicomahnic.enerfiv2.ui.mainFragments.tempmenu.TempMenuFragment"
+        android:id="@+id/logoutFragment"
+        android:name="com.nicomahnic.enerfiv2.ui.mainFragments.logout.LogoutFragment"
         android:label="fragment_temp_menu"
-        tools:layout="@layout/fragment_temp_menu" >
-        <action
-            android:id="@+id/action_tempMenuFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-        <action
-            android:id="@+id/action_tempMenuFragment_to_deviceRegisterFragment"
-            app:destination="@id/deviceRegisterFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_logout" />
 
 </navigation>

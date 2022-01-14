@@ -26,7 +26,8 @@ class HomeFragment : BaseFragment<HomeDataState, HomeAction, HomeEvent, HomeVM>(
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
 
-       initReycleView()
+        initReycleView()
+
     }
 
     private fun initReycleView(){
