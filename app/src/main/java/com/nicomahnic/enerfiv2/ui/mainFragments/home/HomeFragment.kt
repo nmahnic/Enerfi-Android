@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nicomahnic.enerfiv2.R
 import com.nicomahnic.enerfiv2.databinding.FragmentHomeBinding
 import com.nicomahnic.enerfiv2.ui.mainFragments.home.model.Device
 import com.nicomahnic.enerfiv2.ui.mainFragments.home.model.DevicesProvider
+import com.nicomahnic.enerfiv2.ui.splashFragments.login.LoginFragmentDirections
 import com.nicomahnic.enerfiv2.utils.core.BaseFragment
 
 
@@ -37,7 +39,8 @@ class HomeFragment : BaseFragment<HomeDataState, HomeAction, HomeEvent, HomeVM>(
     }
 
     private fun onItemSelected(pos: Int, device: Device){
-        Toast.makeText(context,device.name,Toast.LENGTH_SHORT).show()
+        val action = HomeFragmentDirections.actionHomeFragmentToMeasureFragment()
+        v.findNavController().navigate(action)
     }
 
     override fun renderViewState(viewState: HomeDataState) {
