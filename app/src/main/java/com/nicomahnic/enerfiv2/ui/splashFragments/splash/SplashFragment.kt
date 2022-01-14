@@ -14,9 +14,15 @@ import com.nicomahnic.enerfiv2.ui.activities.MainActivity
 class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     private val SPLASH_TIME_OUT:Long = 500 // 2 sec
+    private lateinit var v : View
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        v = view
+    }
+
+    override fun onStart() {
+        super.onStart()
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
         val userMail = prefs.getString("userMail","")
@@ -25,11 +31,11 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         after(SPLASH_TIME_OUT){
             if(userMail!!.isBlank() && password!!.isBlank()) {
                 val action = SplashFragmentDirections.actionSplashFragmentToLoginFragment()
-                view.findNavController().navigate(action)
+                v.findNavController().navigate(action)
             } else {
                 after(SPLASH_TIME_OUT) {
                     startActivity(Intent(context, MainActivity::class.java))
-                    activity?.finish()
+//                    activity?.finish()
                 }
             }
         }

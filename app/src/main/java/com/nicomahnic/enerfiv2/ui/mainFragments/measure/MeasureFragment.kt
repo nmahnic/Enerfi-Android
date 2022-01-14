@@ -42,9 +42,6 @@ class MeasureFragment : BaseFragment<MeasureDataState, MeasureAction, MeasureEve
         SignalChange.binding = binding
         binding.chart.setOnChartValueSelectedListener(SignalChange)
         binding.btnAddRandomData.setOnClickListener(clickListenerAddData)
-        binding.btnLogout.setOnClickListener(clickListenerLogout)
-        binding.btnConnect.setOnClickListener(clickListenerConnect)
-        binding.btnDevices.setOnClickListener(clickListenerDevices)
 
         activity?.actionBar?.title = "CubicLineChart"
 
@@ -155,26 +152,6 @@ class MeasureFragment : BaseFragment<MeasureDataState, MeasureAction, MeasureEve
         val point = Voltage(x,y,"MAAAASH")
 
         viewModel.process(MeasureEvent.AddPoint(point))
-    }
-
-    private val clickListenerLogout = View.OnClickListener {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        with(prefs.edit()) {
-            putString("userMail", "")
-            putString("password", "")
-            apply()
-        }
-        activity?.finish()
-    }
-
-    private val clickListenerConnect = View.OnClickListener {
-        val action = MeasureFragmentDirections.actionMeasureFragmentToDeviceRegisterFragment()
-        v.findNavController().navigate(action)
-    }
-
-    private val clickListenerDevices = View.OnClickListener {
-        val action = MeasureFragmentDirections.actionMeasureFragmentToHomeFragment()
-        v.findNavController().navigate(action)
     }
 
     private fun setData(entries: List<Entry>?) {

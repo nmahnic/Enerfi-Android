@@ -51,7 +51,7 @@ class LoginFragment : BaseFragment<LoginDataState, LoginAction, LoginEvent, Logi
 
     override fun onDestroy() {
         super.onDestroy()
-        activity?.finish()
+//        activity?.finish()
     }
 
     override fun renderViewState(viewState: LoginDataState) {
