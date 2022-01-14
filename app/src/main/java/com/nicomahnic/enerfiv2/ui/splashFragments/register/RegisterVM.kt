@@ -3,11 +3,9 @@ package com.nicomahnic.enerfiv2.ui.splashFragments.register
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
-import com.github.mikephil.charting.data.Entry
 import com.nicomahnic.enerfiv2.model.User
 import com.nicomahnic.enerfiv2.repository.GetUsers
 import com.nicomahnic.enerfiv2.repository.InsertUser
-import com.nicomahnic.enerfiv2.ui.mainFragments.home.HomeState
 import com.nicomahnic.enerfiv2.utils.DataState
 import com.nicomahnic.enerfiv2.utils.core.BaseViewModel
 import kotlinx.coroutines.flow.catch

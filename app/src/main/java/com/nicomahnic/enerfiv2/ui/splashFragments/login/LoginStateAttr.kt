@@ -1,8 +1,6 @@
 package com.nicomahnic.enerfiv2.ui.splashFragments.login
 
 import com.github.mikephil.charting.data.Entry
-import com.nicomahnic.enerfiv2.model.Voltage
-import com.nicomahnic.enerfiv2.ui.mainFragments.home.HomeEvent
 
 // STATE
 data class LoginDataState(

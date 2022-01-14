@@ -1,4 +1,4 @@
-package com.nicomahnic.enerfiv2.ui.mainFragments.home
+package com.nicomahnic.enerfiv2.ui.mainFragments.measure
 
 import android.graphics.Color
 import android.os.Bundle
@@ -18,25 +18,24 @@ import com.github.mikephil.charting.formatter.IFillFormatter
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.nicomahnic.enerfiv2.R
-import com.nicomahnic.enerfiv2.databinding.FragmentHomeBinding
+import com.nicomahnic.enerfiv2.databinding.FragmentMeasureBinding
 import com.nicomahnic.enerfiv2.model.Voltage
-import com.nicomahnic.enerfiv2.ui.splashFragments.login.LoginFragmentDirections
 import com.nicomahnic.enerfiv2.utils.core.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.ArrayList
 
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment<HomeDataState, HomeAction, HomeEvent, HomeVM>
-    (R.layout.fragment_home)
+class MeasureFragment : BaseFragment<MeasureDataState, MeasureAction, MeasureEvent, MeasureVM>
+    (R.layout.fragment_measure)
 {
-    override val viewModel: HomeVM by viewModels()
-    private lateinit var binding: FragmentHomeBinding
+    override val viewModel: MeasureVM by viewModels()
+    private lateinit var binding: FragmentMeasureBinding
     private lateinit var v: View
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentHomeBinding.bind(view)
+        binding = FragmentMeasureBinding.bind(view)
         v = view
 
         // set listener
@@ -86,12 +85,12 @@ class HomeFragment : BaseFragment<HomeDataState, HomeAction, HomeEvent, HomeVM>
 
         binding.chart.animateXY(2000, 50)
 
-        viewModel.process(HomeEvent.LoadData)
+        viewModel.process(MeasureEvent.LoadData)
     }
 
     object SignalChange : OnChartValueSelectedListener {
 
-        lateinit var binding: FragmentHomeBinding
+        lateinit var binding: FragmentMeasureBinding
 
         override fun onValueSelected(e: Entry?, h: Highlight?) {
             Log.d("NM","Entry selected $e")
@@ -107,12 +106,12 @@ class HomeFragment : BaseFragment<HomeDataState, HomeAction, HomeEvent, HomeVM>
 
     }
 
-    override fun renderViewState(viewState: HomeDataState) {
+    override fun renderViewState(viewState: MeasureDataState) {
         when (viewState.state) {
-            is HomeState.AddPointToPlot -> {
+            is MeasureState.AddPointToPlot -> {
                 addPointToPlot(viewState.data!!.first())
             }
-            is HomeState.Plot -> {
+            is MeasureState.Plot -> {
                 setData(viewState.data)
             }
             else -> {
@@ -121,9 +120,9 @@ class HomeFragment : BaseFragment<HomeDataState, HomeAction, HomeEvent, HomeVM>
         }
     }
 
-    override fun renderViewEffect(viewEffect: HomeAction) {
+    override fun renderViewEffect(viewEffect: MeasureAction) {
         when (viewEffect) {
-            is HomeAction.OK -> {
+            is MeasureAction.OK -> {
                 Log.d("NM", "$viewEffect")
             }
         }
@@ -154,7 +153,7 @@ class HomeFragment : BaseFragment<HomeDataState, HomeAction, HomeEvent, HomeVM>
         val y = (Math.random() * 40).toFloat() + 200F
         val point = Voltage(x,y,"MAAAASH")
 
-        viewModel.process(HomeEvent.AddPoint(point))
+        viewModel.process(MeasureEvent.AddPoint(point))
     }
 
     private val clickListenerLogout = View.OnClickListener {
@@ -168,7 +167,7 @@ class HomeFragment : BaseFragment<HomeDataState, HomeAction, HomeEvent, HomeVM>
     }
 
     private val clickListenerConnect = View.OnClickListener {
-        val action = HomeFragmentDirections.actionHomeFragmentToDeviceRegisterFragment()
+        val action = MeasureFragmentDirections.actionMeasureFragmentToDeviceRegisterFragment()
         v.findNavController().navigate(action)
     }
 

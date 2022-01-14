@@ -1,4 +1,4 @@
-package com.nicomahnic.enerfiv2.ui.mainFragments.home
+package com.nicomahnic.enerfiv2.ui.mainFragments.measure
 
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
@@ -14,24 +14,24 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
-class HomeVM @ViewModelInject constructor(
+class MeasureVM @ViewModelInject constructor(
     private val getVoltage: GetVoltage,
     private val insertVoltage: InsertVoltage
-) : BaseViewModel<HomeDataState, HomeAction, HomeEvent>(){
+) : BaseViewModel<MeasureDataState, MeasureAction, MeasureEvent>(){
 
     init {
-        viewState = HomeDataState(
-            state = HomeState.Initial
+        viewState = MeasureDataState(
+            state = MeasureState.Initial
         )
     }
 
-    override fun process(viewEvent: HomeEvent) {
+    override fun process(viewEvent: MeasureEvent) {
         super.process(viewEvent)
         when (viewEvent){
-            is HomeEvent.LoadData -> {
+            is MeasureEvent.LoadData -> {
                 getVoltage()
             }
-            is HomeEvent.AddPoint -> {
+            is MeasureEvent.AddPoint -> {
                 insetVoltage(viewEvent.data.x, viewEvent.data.y)
             }
         }
@@ -46,7 +46,7 @@ class HomeVM @ViewModelInject constructor(
                         is DataState.Success -> {
                             Log.d("NM", "insertVoltage Success: ${res.data}")
                             viewState = viewState.copy(
-                                state = HomeState.AddPointToPlot,
+                                state = MeasureState.AddPointToPlot,
                                 data = listOf<Entry>(Entry(x,y))
                             )
                         }
@@ -71,7 +71,7 @@ class HomeVM @ViewModelInject constructor(
                                 entries.add(Entry(it.x, it.y))
                             }
                             viewState = viewState.copy(
-                                state = HomeState.Plot,
+                                state = MeasureState.Plot,
                                 data = entries
                             )
                         }
