@@ -2,6 +2,7 @@ package com.nicomahnic.enerfiv2.ui.splashFragments.register
 
 import android.content.SharedPreferences
 import com.github.mikephil.charting.data.Entry
+import com.nicomahnic.enerfiv2.ui.splashFragments.login.LoginState
 
 // STATE
 data class RegisterDataState(
@@ -29,4 +30,6 @@ sealed class RegisterState {
     object NotValidated : RegisterState()
     object Registered : RegisterState()
     object GoToHome : RegisterState()
+    object FailureServer: RegisterState()
+    object FailureLocal: RegisterState()
 }

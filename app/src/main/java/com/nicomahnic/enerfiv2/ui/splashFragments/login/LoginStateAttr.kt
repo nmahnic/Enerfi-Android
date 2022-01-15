@@ -28,4 +28,6 @@ sealed class LoginState {
     object NotValidated : LoginState()
     object GoToRegister : LoginState()
     object GoToHome : LoginState()
+    object FailureServer: LoginState()
+    object FailureLocal: LoginState()
 }

@@ -2,8 +2,10 @@ package com.nicomahnic.enerfiv2.apis.apiServer
 
 import com.nicomahnic.enerfiv2.apis.apiServer.networkModels.PostNewDeviceRequestNetworkEntity
 import com.nicomahnic.enerfiv2.apis.apiServer.networkModels.PostNewUserRequestNetworkEntity
+import com.nicomahnic.enerfiv2.apis.apiServer.networkModels.PostUserRequestNetworkEntity
 import com.nicomahnic.enerfiv2.model.server.request.PostNewDeviceRequest
 import com.nicomahnic.enerfiv2.model.server.request.PostNewUserRequest
+import com.nicomahnic.enerfiv2.model.server.request.PostUserRequest
 import com.nicomahnic.enerfiv2.utils.EntityMapper
 import javax.inject.Inject
 
@@ -37,6 +39,26 @@ class PostNewUserRequestMapper @Inject constructor():
     override fun mapToEntity(domainModel: PostNewUserRequest): PostNewUserRequestNetworkEntity {
         return PostNewUserRequestNetworkEntity(
             name = domainModel.name,
+            mail = domainModel.mail,
+            passwd = domainModel.passwd,
+            lastname = ""
+        )
+    }
+
+}
+
+class PostUserRequestMapper @Inject constructor():
+    EntityMapper<PostUserRequestNetworkEntity, PostUserRequest> {
+
+    override fun mapFromEntity(entity: PostUserRequestNetworkEntity): PostUserRequest {
+        return PostUserRequest(
+            mail = entity.mail,
+            passwd = entity.passwd
+        )
+    }
+
+    override fun mapToEntity(domainModel: PostUserRequest): PostUserRequestNetworkEntity {
+        return PostUserRequestNetworkEntity(
             mail = domainModel.mail,
             passwd = domainModel.passwd
         )

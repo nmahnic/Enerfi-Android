@@ -57,6 +57,12 @@ class RegisterFragment : BaseFragment<RegisterDataState, RegisterAction, Registe
             is RegisterState.NotValidated -> {
                 Snackbar.make(v, "Something was wrong, please try again", Snackbar.LENGTH_LONG).show()
             }
+            is RegisterState.FailureServer -> {
+                Snackbar.make(v, "Something fail in server", Snackbar.LENGTH_LONG).show()
+            }
+            is RegisterState.FailureLocal -> {
+                Snackbar.make(v, "Something fail in local", Snackbar.LENGTH_LONG).show()
+            }
             is RegisterState.GoToHome -> {
                 after(TIME_OUT) {
                     startActivity(Intent(context, MainActivity::class.java))

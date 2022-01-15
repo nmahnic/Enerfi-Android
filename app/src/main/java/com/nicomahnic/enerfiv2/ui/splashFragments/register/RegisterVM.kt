@@ -34,9 +34,7 @@ class RegisterVM @ViewModelInject constructor(
                 if (viewEvent.mail.isNotBlank() && viewEvent.passwd == viewEvent.verifyPasswd && viewEvent.passwd.isNotBlank()){
                     postNewUser(viewEvent.name, viewEvent.mail, viewEvent.passwd)
                 }else{
-                    viewState = viewState.copy(
-                        state = RegisterState.NotValidated
-                    )
+                    viewState = viewState.copy(state = RegisterState.NotValidated)
                 }
             }
             is RegisterEvent.Register -> {
@@ -52,17 +50,16 @@ class RegisterVM @ViewModelInject constructor(
                 .onEach { res ->
                     when (res) {
                         is DataState.Success -> {
-                            viewState =  viewState.copy(
-                                state = RegisterState.Validated,
-                                mail = mail,
-                                passwd = passwd
-                            )
+                            Log.d("NM", "postNewUser SUCCESS: $res")
+                            viewState = if(res.data.responseCode == 201){
+                                viewState.copy(state = RegisterState.Validated, mail = mail, passwd = passwd)
+                            } else {
+                                viewState.copy(state = RegisterState.NotValidated)
+                            }
                         }
                         is DataState.Failure -> {
                             Log.d("NM", "postNewUser FAIL: $res")
-                            viewState = viewState.copy(
-                                state = RegisterState.NotValidated
-                            )
+                            viewState = viewState.copy(state = RegisterState.FailureServer)
                         }
                     }
                 }.launchIn(viewModelScope)

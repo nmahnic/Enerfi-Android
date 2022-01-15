@@ -13,7 +13,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.nicomahnic.enerfiv2.R
 import com.nicomahnic.enerfiv2.ui.activities.MainActivity
 import com.nicomahnic.enerfiv2.databinding.FragmentLoginBinding
-import com.nicomahnic.enerfiv2.ui.splashFragments.register.RegisterEvent
 import com.nicomahnic.enerfiv2.utils.core.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -58,6 +57,12 @@ class LoginFragment : BaseFragment<LoginDataState, LoginAction, LoginEvent, Logi
         when (viewState.state) {
             is LoginState.NotValidated -> {
                 Snackbar.make(v, "User/Password is incorrect, please try again", Snackbar.LENGTH_LONG).show()
+            }
+            is LoginState.FailureServer -> {
+                Snackbar.make(v, "Something fail in server", Snackbar.LENGTH_LONG).show()
+            }
+            is LoginState.FailureLocal -> {
+                Snackbar.make(v, "Something fail in local", Snackbar.LENGTH_LONG).show()
             }
             is LoginState.Validated -> {
                 val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())

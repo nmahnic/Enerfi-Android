@@ -21,14 +21,14 @@ class PostNewDevice @Inject constructor(
     suspend fun request(req: PostNewDeviceRequest): Flow<DataState<PostNewDeviceResponse>> = flow {
 
         try {
-            Log.d("NM", "GET NETWORKS REQUEST")
+            Log.d("NM", "PostNewDevice REQUEST")
             val res = apiHelper.postDeviceRequest(txnRequestMapper.mapToEntity(req))
-            Log.d("NM", "Status Response  -> networks=${res.macAddress}")
-            Log.d("NM", "Status Response  -> quality=${res.responseCode}")
+            Log.d("NM", "PostNewDevice Response  -> networks=${res.macAddress}")
+            Log.d("NM", "PostNewDevice Response  -> quality=${res.responseCode}")
 
             emit(DataState.Success(txnResponseMapper.mapFromEntity(res)))
         } catch (e: Exception) {
-            Log.d("NM", "GET NETWORKS REQUEST -> FAILURE ${e}")
+            Log.d("NM", "PostNewDevice REQUEST -> FAILURE ${e}")
             emit(DataState.Failure(e))
         }
     }
