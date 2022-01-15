@@ -1,6 +1,6 @@
 package com.nicomahnic.enerfiv2.data.entities
 
-import com.nicomahnic.enerfiv2.model.User
+import com.nicomahnic.enerfiv2.model.local.User
 import com.nicomahnic.enerfiv2.utils.EntityMapper
 import javax.inject.Inject
 

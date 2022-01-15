@@ -1,9 +1,9 @@
-package com.nicomahnic.enerfiv2.repository
+package com.nicomahnic.enerfiv2.repository.local
 
 import android.util.Log
 import com.nicomahnic.enerfiv2.data.entities.VoltageMapper
 import com.nicomahnic.enerfiv2.domain.VoltageDao
-import com.nicomahnic.enerfiv2.model.Voltage
+import com.nicomahnic.enerfiv2.model.local.Voltage
 import com.nicomahnic.enerfiv2.utils.DataState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

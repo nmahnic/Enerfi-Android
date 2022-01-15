@@ -19,7 +19,7 @@ sealed class RegisterAction {
 // VIEW EVENT
 sealed class RegisterEvent {
     data class Register(val mail: String, val passwd: String): RegisterEvent()
-    data class Validate(val mail: String, val passwd: String, val verifyPasswd: String, val pref: SharedPreferences): RegisterEvent()
+    data class Validate(val name: String, val mail: String, val passwd: String, val verifyPasswd: String): RegisterEvent()
 }
 
 // VIEW STATE

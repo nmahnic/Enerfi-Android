@@ -1,6 +1,6 @@
 package com.nicomahnic.enerfiv2.data.entities
 
-import com.nicomahnic.enerfiv2.model.Voltage
+import com.nicomahnic.enerfiv2.model.local.Voltage
 import com.nicomahnic.enerfiv2.utils.EntityMapper
 import javax.inject.Inject
 

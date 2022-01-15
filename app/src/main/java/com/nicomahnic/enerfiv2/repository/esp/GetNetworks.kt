@@ -1,9 +1,9 @@
-package com.nicomahnic.enerfiv2.repository
+package com.nicomahnic.enerfiv2.repository.esp
 
 import android.util.Log
 import com.nicomahnic.enerfiv2.apis.apiESP.ApiHelper
 import com.nicomahnic.enerfiv2.apis.apiESP.GetNetworksResponseMapper
-import com.nicomahnic.enerfiv2.model.response.GetNetworksResponse
+import com.nicomahnic.enerfiv2.model.esp.response.GetNetworksResponse
 import com.nicomahnic.enerfiv2.utils.DataState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

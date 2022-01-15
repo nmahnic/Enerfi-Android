@@ -36,9 +36,9 @@ class RegisterFragment : BaseFragment<RegisterDataState, RegisterAction, Registe
         binding.btnRegister.setOnClickListener {
             viewModel.process(RegisterEvent.Validate(
                 binding.edtUsername.text.toString(),
+                binding.edtUsermail.text.toString(),
                 binding.edtPassword.text.toString(),
                 binding.edtVerifyPassword.text.toString(),
-                prefs
             ))
         }
     }
@@ -48,7 +48,7 @@ class RegisterFragment : BaseFragment<RegisterDataState, RegisterAction, Registe
             is RegisterState.Validated -> {
                 val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
                 with(prefs.edit()){
-                    putString("userMail",binding.edtUsername.text.toString())
+                    putString("userMail",binding.edtUsermail.text.toString())
                     putString("password",binding.edtPassword.text.toString())
                     apply()
                 }

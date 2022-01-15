@@ -3,8 +3,7 @@ package com.nicomahnic.enerfiv2.ui.splashFragments.login
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
-import com.nicomahnic.enerfiv2.repository.GetUsers
-import com.nicomahnic.enerfiv2.repository.GetUsersByEmail
+import com.nicomahnic.enerfiv2.repository.local.GetUsersByEmail
 import com.nicomahnic.enerfiv2.utils.DataState
 import com.nicomahnic.enerfiv2.utils.core.BaseViewModel
 import kotlinx.coroutines.flow.catch

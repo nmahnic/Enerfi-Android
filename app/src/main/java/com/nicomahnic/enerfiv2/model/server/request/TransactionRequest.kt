@@ -1,4 +1,4 @@
-package com.nicomahnic.enerfiv2.model.request
+package com.nicomahnic.enerfiv2.model.server.request
 
 abstract class TransactionRequest {
     abstract val androidId: String

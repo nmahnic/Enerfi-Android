@@ -2,8 +2,8 @@ package com.nicomahnic.enerfiv2.apis.apiESP
 
 import com.nicomahnic.enerfiv2.apis.apiESP.networkModels.GetNetworksResponseNetworkEntity
 import com.nicomahnic.enerfiv2.apis.apiESP.networkModels.SetCredentialsResponseNetworkEntity
-import com.nicomahnic.enerfiv2.model.response.GetNetworksResponse
-import com.nicomahnic.enerfiv2.model.response.SetCredentialsResponse
+import com.nicomahnic.enerfiv2.model.esp.response.GetNetworksResponse
+import com.nicomahnic.enerfiv2.model.esp.response.SetCredentialsResponse
 import com.nicomahnic.enerfiv2.utils.EntityMapper
 import javax.inject.Inject
 

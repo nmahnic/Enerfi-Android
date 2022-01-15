@@ -1,4 +1,6 @@
-package com.nicomahnic.enerfiv2.model.response
+package com.nicomahnic.enerfiv2.model.esp.response
+
+import com.nicomahnic.enerfiv2.model.server.response.TransactionResponse
 
 data class GetNetworksResponse(
     override val responseCode: Int,

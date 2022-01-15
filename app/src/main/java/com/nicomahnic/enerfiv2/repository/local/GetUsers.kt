@@ -1,29 +1,31 @@
-package com.nicomahnic.enerfiv2.repository
+package com.nicomahnic.enerfiv2.repository.local
 
 import android.util.Log
 import com.nicomahnic.enerfiv2.data.entities.UserMapper
 import com.nicomahnic.enerfiv2.domain.UserDao
-import com.nicomahnic.enerfiv2.model.User
+import com.nicomahnic.enerfiv2.model.local.User
 import com.nicomahnic.enerfiv2.utils.DataState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.lang.Exception
 import javax.inject.Inject
 
-class InsertUser @Inject constructor(
+
+class GetUsers @Inject constructor(
     private val userDao: UserDao,
     private val userMapper: UserMapper
 ) {
 
-    suspend fun task(user: User) : Flow<DataState<String>> = flow {
-        Log.d("NM", "insertUser llegue")
+    suspend fun task() : Flow<DataState<List<User>>> = flow {
+        Log.d("NM", "getUser llegue")
         try {
-            userDao.insertUser(userMapper.mapToEntity(user))
-            emit(DataState.Success("OK"))
+            val res = mutableListOf<User>()
+            val resEntity = userDao.getAllUsers()
+            resEntity.forEach { res.add(userMapper.mapFromEntity(it)) }
+            emit(DataState.Success(res))
         } catch (e: Exception){
             emit(DataState.Failure(e))
         }
-
     }
 
 }

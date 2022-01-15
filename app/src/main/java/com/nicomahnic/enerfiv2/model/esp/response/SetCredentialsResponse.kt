@@ -1,4 +1,4 @@
-package com.nicomahnic.enerfiv2.model.response
+package com.nicomahnic.enerfiv2.model.esp.response
 
 data class SetCredentialsResponse(
     override val responseCode: Int,

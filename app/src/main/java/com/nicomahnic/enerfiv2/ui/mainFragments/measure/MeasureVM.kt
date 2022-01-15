@@ -4,9 +4,9 @@ import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import com.github.mikephil.charting.data.Entry
-import com.nicomahnic.enerfiv2.model.Voltage
-import com.nicomahnic.enerfiv2.repository.GetVoltage
-import com.nicomahnic.enerfiv2.repository.InsertVoltage
+import com.nicomahnic.enerfiv2.model.local.Voltage
+import com.nicomahnic.enerfiv2.repository.local.GetVoltage
+import com.nicomahnic.enerfiv2.repository.local.InsertVoltage
 import com.nicomahnic.enerfiv2.utils.DataState
 import com.nicomahnic.enerfiv2.utils.core.BaseViewModel
 import kotlinx.coroutines.flow.catch

@@ -3,9 +3,11 @@ package com.nicomahnic.enerfiv2.ui.splashFragments.register
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
-import com.nicomahnic.enerfiv2.model.User
-import com.nicomahnic.enerfiv2.repository.GetUsers
-import com.nicomahnic.enerfiv2.repository.InsertUser
+import com.nicomahnic.enerfiv2.model.local.User
+import com.nicomahnic.enerfiv2.model.server.request.PostNewUserRequest
+import com.nicomahnic.enerfiv2.repository.local.GetUsers
+import com.nicomahnic.enerfiv2.repository.local.InsertUser
+import com.nicomahnic.enerfiv2.repository.server.PostNewUser
 import com.nicomahnic.enerfiv2.utils.DataState
 import com.nicomahnic.enerfiv2.utils.core.BaseViewModel
 import kotlinx.coroutines.flow.catch
@@ -16,6 +18,7 @@ import kotlinx.coroutines.launch
 class RegisterVM @ViewModelInject constructor(
     private val getUsers: GetUsers,
     private val insertUser: InsertUser,
+    private val postNewUser: PostNewUser
 ) : BaseViewModel<RegisterDataState, RegisterAction, RegisterEvent>(){
 
     init {
@@ -28,14 +31,10 @@ class RegisterVM @ViewModelInject constructor(
         super.process(viewEvent)
         when (viewEvent){
             is RegisterEvent.Validate -> {
-                viewState = if (viewEvent.mail.isNotBlank() && viewEvent.passwd == viewEvent.verifyPasswd && viewEvent.passwd.isNotBlank()){
-                    viewState.copy(
-                        state = RegisterState.Validated,
-                        mail = viewEvent.mail,
-                        passwd = viewEvent.passwd
-                    )
+                if (viewEvent.mail.isNotBlank() && viewEvent.passwd == viewEvent.verifyPasswd && viewEvent.passwd.isNotBlank()){
+                    postNewUser(viewEvent.name, viewEvent.mail, viewEvent.passwd)
                 }else{
-                    viewState.copy(
+                    viewState = viewState.copy(
                         state = RegisterState.NotValidated
                     )
                 }
@@ -43,6 +42,30 @@ class RegisterVM @ViewModelInject constructor(
             is RegisterEvent.Register -> {
                 insetUser(viewEvent.mail, viewEvent.passwd)
             }
+        }
+    }
+
+    private fun postNewUser(name: String, mail: String, passwd: String){
+        viewModelScope.launch {
+            postNewUser.request(PostNewUserRequest(name, mail, passwd))
+                .catch { exception -> Log.d("NM", "exception -> ${exception}")}
+                .onEach { res ->
+                    when (res) {
+                        is DataState.Success -> {
+                            viewState =  viewState.copy(
+                                state = RegisterState.Validated,
+                                mail = mail,
+                                passwd = passwd
+                            )
+                        }
+                        is DataState.Failure -> {
+                            Log.d("NM", "postNewUser FAIL: $res")
+                            viewState = viewState.copy(
+                                state = RegisterState.NotValidated
+                            )
+                        }
+                    }
+                }.launchIn(viewModelScope)
         }
     }
 

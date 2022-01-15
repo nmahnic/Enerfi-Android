@@ -22,19 +22,37 @@ tools:context=".ui.splashFragments.register.RegisterFragment">
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/userMail"
+        android:id="@+id/userFullName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:hint="@string/userMail"
+        android:hint="@string/userName"
+
         android:padding="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/password"
+        app:layout_constraintBottom_toTopOf="@+id/userMail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guideline2">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edt_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/white" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/userMail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/userMail"
+        android:padding="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userFullName">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_usermail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColorHint="@color/white" />
@@ -65,7 +83,7 @@ tools:context=".ui.splashFragments.register.RegisterFragment">
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/confirm_password"
-        android:padding="5dp"
+        android:padding="0dp"
         app:passwordToggleEnabled="true"
         app:layout_constraintBottom_toTopOf="@+id/btn_register"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,7 +106,7 @@ tools:context=".ui.splashFragments.register.RegisterFragment">
         android:text="@string/register_new_user"
         android:textColor="@color/black"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/userMail"
+        app:layout_constraintBottom_toTopOf="@+id/userFullName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline2" />

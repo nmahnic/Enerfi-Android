@@ -3,10 +3,10 @@ package com.nicomahnic.enerfiv2.ui.mainFragments.deviceregister
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
-import com.nicomahnic.enerfiv2.model.request.PostNewDeviceRequest
-import com.nicomahnic.enerfiv2.repository.GetNetworks
-import com.nicomahnic.enerfiv2.repository.PostNewDevice
-import com.nicomahnic.enerfiv2.repository.SetCredentials
+import com.nicomahnic.enerfiv2.model.server.request.PostNewDeviceRequest
+import com.nicomahnic.enerfiv2.repository.esp.GetNetworks
+import com.nicomahnic.enerfiv2.repository.server.PostNewDevice
+import com.nicomahnic.enerfiv2.repository.esp.SetCredentials
 import com.nicomahnic.enerfiv2.utils.DataState
 import com.nicomahnic.enerfiv2.utils.core.BaseViewModel
 import kotlinx.coroutines.flow.catch
