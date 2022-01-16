@@ -17,4 +17,9 @@ interface ServerService {
     @POST("/validateuser/")
     suspend fun postValidateUserRequest(@Body req: PostUserRequestNetworkEntity): PostGeneralResponseNetworkEntity
 
+    @Headers("Content-Type: application/json")
+    @POST("/listfulldumbyuser/")
+    suspend fun postDevicesByEmailRequest(@Body req: PostUserRequestNetworkEntity) : List<PostDevicesByEmailResponseNetworkEntity>
+
+
 }

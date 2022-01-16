@@ -10,4 +10,6 @@ interface ServerHelper {
 
     suspend fun postValidateUserRequest(req: PostUserRequestNetworkEntity) : PostGeneralResponseNetworkEntity
 
+    suspend fun postDevicesByEmailRequest(req: PostUserRequestNetworkEntity) : List<PostDevicesByEmailResponseNetworkEntity>
+
 }

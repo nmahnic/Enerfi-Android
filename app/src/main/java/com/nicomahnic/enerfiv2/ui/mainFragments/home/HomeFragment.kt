@@ -1,6 +1,7 @@
 package com.nicomahnic.enerfiv2.ui.mainFragments.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -8,12 +9,14 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nicomahnic.enerfiv2.R
 import com.nicomahnic.enerfiv2.databinding.FragmentHomeBinding
-import com.nicomahnic.enerfiv2.model.local.Device
-import com.nicomahnic.enerfiv2.ui.mainFragments.home.model.DevicesProvider
+import com.nicomahnic.enerfiv2.model.server.response.PostDevicesByEmailResponse
 import com.nicomahnic.enerfiv2.utils.core.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
-
-class HomeFragment : BaseFragment<HomeDataState, HomeAction, HomeEvent, HomeVM>(R.layout.fragment_home) {
+@AndroidEntryPoint
+class HomeFragment : BaseFragment<HomeDataState, HomeAction, HomeEvent, HomeVM>
+    (R.layout.fragment_home)
+{
 
     override val viewModel: HomeVM by viewModels()
     private lateinit var binding: FragmentHomeBinding
@@ -25,24 +28,33 @@ class HomeFragment : BaseFragment<HomeDataState, HomeAction, HomeEvent, HomeVM>(
         v = view
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        val mail = prefs.getString("userMail","")!!
+        val passwd = prefs.getString("password","")!!
 
-        initReycleView()
+        viewModel.process(HomeEvent.GetDevices(mail,passwd))
 
     }
 
-    private fun initReycleView(){
+    private fun initReycleView(devices: List<PostDevicesByEmailResponse>){
         val recyclerView = binding.rvDevices
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = DeviceAdapter(DevicesProvider.devices) { pos,device -> onItemSelected(pos,device) }
+        recyclerView.adapter = DeviceAdapter(devices) { pos, device -> onItemSelected(pos,device) }
     }
 
-    private fun onItemSelected(pos: Int, device: Device){
+    private fun onItemSelected(pos: Int, device: PostDevicesByEmailResponse){
         val action = HomeFragmentDirections.actionHomeFragmentToMeasureFragment()
         v.findNavController().navigate(action)
     }
 
     override fun renderViewState(viewState: HomeDataState) {
-//        TODO("Not yet implemented")
+        when(viewState.state){
+            is HomeState.Devices -> {
+                initReycleView(viewState.data!!)
+            }
+            else -> {
+                Log.d("NM", "${viewState.state}")
+            }
+        }
     }
 
     override fun renderViewEffect(viewEffect: HomeAction) {

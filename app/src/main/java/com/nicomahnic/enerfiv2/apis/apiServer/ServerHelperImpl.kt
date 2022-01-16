@@ -19,4 +19,8 @@ class ServerHelperImpl @Inject constructor(
         return apiService.postValidateUserRequest(req)
     }
 
+    override suspend fun postDevicesByEmailRequest(req: PostUserRequestNetworkEntity) : List<PostDevicesByEmailResponseNetworkEntity>{
+        return apiService.postDevicesByEmailRequest(req)
+    }
+
 }

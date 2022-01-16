@@ -32,7 +32,4 @@ object RoomModule {
     @Provides
     fun provideUserDao(db: AppDatabase) = db.userDao()
 
-    @Singleton
-    @Provides
-    fun provideDeviceDao(db: AppDatabase) = db.deviceDao()
 }

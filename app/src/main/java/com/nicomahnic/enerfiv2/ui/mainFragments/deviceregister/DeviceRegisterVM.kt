@@ -7,8 +7,6 @@ import com.nicomahnic.enerfiv2.model.server.request.PostNewDeviceRequest
 import com.nicomahnic.enerfiv2.repository.esp.GetNetworks
 import com.nicomahnic.enerfiv2.repository.server.PostNewDevice
 import com.nicomahnic.enerfiv2.repository.esp.SetCredentials
-import com.nicomahnic.enerfiv2.repository.local.InsertDevice
-import com.nicomahnic.enerfiv2.model.local.Device
 import com.nicomahnic.enerfiv2.utils.DataState
 import com.nicomahnic.enerfiv2.utils.core.BaseViewModel
 import kotlinx.coroutines.flow.catch
@@ -19,8 +17,7 @@ import kotlinx.coroutines.launch
 class DeviceRegisterVM @ViewModelInject constructor(
     private val getNetworks: GetNetworks,
     private val setCredentials: SetCredentials,
-    private val setNewDevice: PostNewDevice,
-    private val insertDevice: InsertDevice
+    private val setNewDevice: PostNewDevice
 ) : BaseViewModel<DeviceRegisterDataState, DeviceRegisterAction, DeviceRegisterEvent>() {
 
 
@@ -98,28 +95,9 @@ class DeviceRegisterVM @ViewModelInject constructor(
                     when (res) {
                         is DataState.Success -> {
                             Log.d("NM", "setNewDevice Success: ${res.data}")
-
-                            insetDevice(Device(deviceName, mac, mail))
                         }
                         is DataState.Failure -> {
                             Log.d("NM", "setNewDevice Failure: ${res.exception}")
-                        }
-                    }
-                }.launchIn(viewModelScope)
-        }
-    }
-
-    private fun insetDevice(device: Device){
-        viewModelScope.launch {
-            insertDevice.task(device)
-                .catch { e -> Log.d("NM", "insertUser Exception: $e") }
-                .onEach { res ->
-                    when(res){
-                        is DataState.Success -> {
-                            Log.d("NM", "insertUser Success: ${res.data}")
-                        }
-                        is DataState.Failure -> {
-                            Log.d("NM", "insertUser Failure: ${res.exception}")
                         }
                     }
                 }.launchIn(viewModelScope)

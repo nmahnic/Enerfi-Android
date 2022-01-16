@@ -1,8 +1,8 @@
 package com.nicomahnic.enerfiv2.repository.server
 
 import android.util.Log
+import com.nicomahnic.enerfiv2.apis.apiServer.PostGeneralResponseMapper
 import com.nicomahnic.enerfiv2.apis.apiServer.PostNewDeviceRequestMapper
-import com.nicomahnic.enerfiv2.apis.apiServer.PostNewDeviceResponseMapper
 import com.nicomahnic.enerfiv2.apis.apiServer.ServerHelper
 import com.nicomahnic.enerfiv2.model.server.request.PostNewDeviceRequest
 import com.nicomahnic.enerfiv2.model.server.response.PostGeneralResponse
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class PostNewDevice @Inject constructor(
     private val apiHelper: ServerHelper,
-    private val txnResponseMapper: PostNewDeviceResponseMapper,
+    private val txnResponseMapper: PostGeneralResponseMapper,
     private val txnRequestMapper: PostNewDeviceRequestMapper
 ) {
 

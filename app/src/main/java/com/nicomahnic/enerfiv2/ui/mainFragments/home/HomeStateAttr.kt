@@ -1,14 +1,11 @@
 package com.nicomahnic.enerfiv2.ui.mainFragments.home
 
-import android.content.SharedPreferences
-import com.github.mikephil.charting.data.Entry
-import com.nicomahnic.enerfiv2.ui.splashFragments.register.RegisterEvent
+import com.nicomahnic.enerfiv2.model.server.response.PostDevicesByEmailResponse
 
 // STATE
 data class HomeDataState(
     val exception: Exception? = null,
-    val mail: String? = null,
-    val passwd: String? = null,
+    val data: List<PostDevicesByEmailResponse>? = null,
     val state: HomeState
 )
 
@@ -19,10 +16,11 @@ sealed class HomeAction {
 
 // VIEW EVENT
 sealed class HomeEvent {
-    data class GetDevices(val mail: String): HomeEvent()
+    data class GetDevices(val mail: String, val passwd: String): HomeEvent()
 }
 
 // VIEW STATE
 sealed class HomeState {
     object Initial : HomeState()
+    object Devices : HomeState()
 }
