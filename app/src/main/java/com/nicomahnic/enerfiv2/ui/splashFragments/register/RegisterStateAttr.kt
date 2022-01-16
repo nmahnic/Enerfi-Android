@@ -1,9 +1,5 @@
 package com.nicomahnic.enerfiv2.ui.splashFragments.register
 
-import android.content.SharedPreferences
-import com.github.mikephil.charting.data.Entry
-import com.nicomahnic.enerfiv2.ui.splashFragments.login.LoginState
-
 // STATE
 data class RegisterDataState(
     val exception: Exception? = null,

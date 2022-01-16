@@ -3,7 +3,6 @@ package com.nicomahnic.enerfiv2.ui.mainFragments.logout
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.preference.PreferenceManager
 import com.nicomahnic.enerfiv2.R
 import com.nicomahnic.enerfiv2.databinding.FragmentLogoutBinding

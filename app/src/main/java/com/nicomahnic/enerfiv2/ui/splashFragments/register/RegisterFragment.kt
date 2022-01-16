@@ -7,13 +7,11 @@ import android.os.Looper
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
 import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
 import com.nicomahnic.enerfiv2.R
 import com.nicomahnic.enerfiv2.databinding.FragmentRegisterBinding
 import com.nicomahnic.enerfiv2.ui.activities.MainActivity
-import com.nicomahnic.enerfiv2.ui.splashFragments.login.*
 import com.nicomahnic.enerfiv2.utils.core.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
