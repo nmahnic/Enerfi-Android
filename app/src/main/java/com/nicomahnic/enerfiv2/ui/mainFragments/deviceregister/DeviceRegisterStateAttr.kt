@@ -5,6 +5,7 @@ import java.lang.Exception
 // STATE
 data class DeviceRegisterDataState(
     val exception: Exception? = null,
+    val mac: String? = null,
     val data: List<String>? = null,
     val state: DeviceRegisterState
 )
@@ -21,7 +22,7 @@ sealed class DeviceRegisterAction {
 sealed class DeviceRegisterEvent {
     object ScanWiFi: DeviceRegisterEvent()
     data class SaveCredentials(val ssid: String, val passwd: String): DeviceRegisterEvent()
-    data class SetNewDevice(val dato: String): DeviceRegisterEvent()
+    data class SetNewDevice(val deviceName: String , val mac: String , val mail: String , val passwd: String): DeviceRegisterEvent()
 }
 
 // VIEW STATE

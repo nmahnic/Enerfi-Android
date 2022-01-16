@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,108 +7,179 @@
     android:orientation="vertical"
     tools:context=".ui.mainFragments.deviceregister.DeviceRegisterFragment">
 
-    <Button
-        android:id="@+id/btn_scan_networks"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="SCAN"/>
-
-    <TextView
-        android:id="@+id/tv_scan_networks_fail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/fail"
-        android:visibility="gone"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/tv_scann_success"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/success"
-        android:visibility="gone"
-        android:textSize="24sp" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:id="@+id/ll1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_16dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/tvTitle1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ssid_name"
+            android:text="@string/deviceName"
             android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/edtUser"
-            android:layout_width="wrap_content"
+            android:id="@+id/edtDeviceName"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/ssid"
-            android:text="GFM_PA"
-            android:inputType="textPersonName|text"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="@+id/textView4"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/password"
-            android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="@+id/edtUser"
-            app:layout_constraintTop_toBottomOf="@+id/edtUser" />
-
-        <EditText
-            android:id="@+id/edtPasswd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/password"
-            android:text="DC4DFD12D8"
-            android:inputType="textPassword"
-            app:layout_constraintStart_toStartOf="@+id/textView3"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:ems="7"
+            android:hint="@string/unknown"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
-        android:id="@+id/btn_save_credentials"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="SAVE CREDENTIALS"/>
-
-    <TextView
-        android:id="@+id/tv_save_credentials_success"
+        android:id="@+id/btn_scan_networks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:text="@string/success"
-        android:textSize="24sp" />
+        android:layout_marginEnd="@dimen/margin_16dp"
+        android:text="SCAN Device"
+        app:layout_constraintBottom_toBottomOf="@+id/ll1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ll1" />
+
+    <TextView
+        android:id="@+id/tv_scan_networks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fail"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/btn_scan_networks"
+        app:layout_constraintStart_toStartOf="@+id/btn_scan_networks"
+        app:layout_constraintTop_toBottomOf="@+id/btn_scan_networks" />
+
+    <TextView
+        android:id="@+id/tvTitle2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:text="@string/mac_address"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll1" />
 
     <TextView
         android:id="@+id/tv_mac_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp" />
+        android:layout_marginStart="10dp"
+        android:hint="@string/unknown"
 
-    <TextView
-        android:id="@+id/tv_save_credentials_fail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:text="@string/fail"
-        android:textSize="24sp" />
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTitle2"
+        app:layout_constraintStart_toEndOf="@+id/tvTitle2"
+        app:layout_constraintTop_toTopOf="@+id/tvTitle2" />
 
-    <Spinner
-        android:id="@+id/spinner"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/credentials"
+        android:visibility="invisible"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_mac_address">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/tvTitle3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_16dp"
+            android:text="@string/network_credentials"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle3">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/spinner"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/ssid"
+                app:layout_constraintStart_toStartOf="@+id/parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="UnknownId">
+
+                <AutoCompleteTextView
+                    android:id="@+id/dropdown_menu"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="none"
+                    android:text="Unknown" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/password"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="@string/password"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/spinner"
+                app:layout_constraintTop_toBottomOf="@+id/spinner"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:text="DC4DFD12D8"
+                    android:textColorHint="@color/white"
+                    app:passwordToggleEnabled="false" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/btn_save_credentials"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="@dimen/margin_16dp"
+            android:text="@string/save_credentials"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+        <TextView
+            android:id="@+id/tv_save_credentials"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/success"
+            android:textSize="24sp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_save_credentials" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

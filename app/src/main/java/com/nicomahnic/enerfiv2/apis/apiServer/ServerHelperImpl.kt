@@ -7,10 +7,16 @@ class ServerHelperImpl @Inject constructor(
     private val apiService: ServerService
 ): ServerHelper {
 
-    override suspend fun postDeviceRequest(req: PostNewDeviceRequestNetworkEntity) : PostNewDeviceResponseNetworkEntity = apiService.postDeviceRequest(req)
+    override suspend fun postDeviceRequest(req: PostNewDeviceRequestNetworkEntity) : PostGeneralResponseNetworkEntity {
+        return apiService.postNewDeviceRequest(req)
+    }
 
-    override suspend fun postNewUserRequest(req: PostNewUserRequestNetworkEntity) : PostGeneralResponseNetworkEntity = apiService.postNewUserRequest(req)
+    override suspend fun postNewUserRequest(req: PostNewUserRequestNetworkEntity) : PostGeneralResponseNetworkEntity {
+        return apiService.postNewUserRequest(req)
+    }
 
-    override suspend fun postValidateUserRequest(req: PostUserRequestNetworkEntity) : PostGeneralResponseNetworkEntity = apiService.postValidateUserRequest(req)
+    override suspend fun postValidateUserRequest(req: PostUserRequestNetworkEntity) : PostGeneralResponseNetworkEntity {
+        return apiService.postValidateUserRequest(req)
+    }
 
 }

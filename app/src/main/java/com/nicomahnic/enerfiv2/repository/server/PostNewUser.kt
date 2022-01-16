@@ -23,8 +23,8 @@ class PostNewUser @Inject constructor(
         try {
             Log.d("NM", "PostNewUser REQUEST")
             val res = apiHelper.postNewUserRequest(txnRequestMapper.mapToEntity(req))
-            Log.d("NM", "PostNewDevice Response  -> networks=${res.message}")
-            Log.d("NM", "PostNewDevice Response  -> quality=${res.responseCode}")
+            Log.d("NM", "PostNewUser Response  -> message=${res.message}")
+            Log.d("NM", "PostNewUser Response  -> responseCode=${res.responseCode}")
 
             emit(DataState.Success(txnResponseMapper.mapFromEntity(res)))
         } catch (e: Exception) {

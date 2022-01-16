@@ -1,7 +1,6 @@
 package com.nicomahnic.enerfiv2.repository.server
 
 import android.util.Log
-import com.nicomahnic.enerfiv2.apis.apiServer.PostNewUserRequestMapper
 import com.nicomahnic.enerfiv2.apis.apiServer.PostGeneralResponseMapper
 import com.nicomahnic.enerfiv2.apis.apiServer.PostUserRequestMapper
 import com.nicomahnic.enerfiv2.apis.apiServer.ServerHelper
@@ -22,7 +21,7 @@ class PostValidateUser @Inject constructor(
     suspend fun request(req: PostUserRequest): Flow<DataState<PostGeneralResponse>> = flow {
 
         try {
-            Log.d("NM", "PostValidateUser REQUEST")
+            Log.d("NM", "PostValidateUser REQUEST -> $req")
             val res = apiHelper.postValidateUserRequest(txnRequestMapper.mapToEntity(req))
             Log.d("NM", "PostValidateUser Response  -> message=${res.message}")
             Log.d("NM", "PostValidateUser Response  -> responseCode=${res.responseCode}")

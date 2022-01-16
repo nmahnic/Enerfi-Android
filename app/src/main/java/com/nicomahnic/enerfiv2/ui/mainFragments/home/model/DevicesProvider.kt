@@ -1,6 +1,6 @@
 package com.nicomahnic.enerfiv2.ui.mainFragments.home.model
 
-import com.nicomahnic.enerfiv2.ui.mainFragments.home.model.Device
+import com.nicomahnic.enerfiv2.model.local.Device
 
 class DevicesProvider {
     companion object{

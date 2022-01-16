@@ -22,9 +22,7 @@ class RegisterVM @ViewModelInject constructor(
 ) : BaseViewModel<RegisterDataState, RegisterAction, RegisterEvent>(){
 
     init {
-        viewState = RegisterDataState(
-            state = RegisterState.Initial
-        )
+        viewState = RegisterDataState( state = RegisterState.Initial )
     }
 
     override fun process(viewEvent: RegisterEvent) {
@@ -34,11 +32,11 @@ class RegisterVM @ViewModelInject constructor(
                 if (viewEvent.mail.isNotBlank() && viewEvent.passwd == viewEvent.verifyPasswd && viewEvent.passwd.isNotBlank()){
                     postNewUser(viewEvent.name, viewEvent.mail, viewEvent.passwd)
                 }else{
-                    viewState = viewState.copy(state = RegisterState.NotValidated)
+                    viewState = viewState.copy( state = RegisterState.NotValidated )
                 }
             }
             is RegisterEvent.Register -> {
-                insetUser(viewEvent.mail, viewEvent.passwd)
+                insetUser(viewEvent.mail)
             }
         }
     }
@@ -52,54 +50,33 @@ class RegisterVM @ViewModelInject constructor(
                         is DataState.Success -> {
                             Log.d("NM", "postNewUser SUCCESS: $res")
                             viewState = if(res.data.responseCode == 201){
-                                viewState.copy(state = RegisterState.Validated, mail = mail, passwd = passwd)
+                                viewState.copy( state = RegisterState.Validated, mail = mail, passwd = passwd )
                             } else {
-                                viewState.copy(state = RegisterState.NotValidated)
+                                viewState.copy( state = RegisterState.NotValidated )
                             }
                         }
                         is DataState.Failure -> {
                             Log.d("NM", "postNewUser FAIL: $res")
-                            viewState = viewState.copy(state = RegisterState.FailureServer)
+                            viewState = viewState.copy( state = RegisterState.FailureServer )
                         }
                     }
                 }.launchIn(viewModelScope)
         }
     }
 
-    private fun insetUser(mail: String, passwd: String){
+    private fun insetUser(mail: String){
         viewModelScope.launch {
             insertUser.task(User(mail))
                 .catch { e -> Log.d("NM", "insertUser Exception: $e") }
                 .onEach { res ->
-                    when(res){
+                    viewState = when(res){
                         is DataState.Success -> {
                             Log.d("NM", "insertUser Success: ${res.data}")
-                            viewState = viewState.copy(
-                                state = RegisterState.Registered
-                            )
+                            viewState.copy( state = RegisterState.Registered )
                         }
                         is DataState.Failure -> {
                             Log.d("NM", "insertUser Failure: ${res.exception}")
-                            viewState = viewState.copy(
-                                state = RegisterState.NotValidated
-                            )
-                        }
-                    }
-                }.launchIn(viewModelScope)
-        }
-    }
-
-    private fun getUser() {
-        viewModelScope.launch {
-            getUsers.task()
-                .catch { e -> Log.d("NM", "getUser Exception: $e") }
-                .onEach { res ->
-                    when(res){
-                        is DataState.Success -> {
-                            Log.d("NM", "getUser Success: ${res.data}")
-                        }
-                        is DataState.Failure -> {
-                            Log.d("NM", "getUser Failure: ${res.exception}")
+                            viewState.copy( state = RegisterState.NotValidated )
                         }
                     }
                 }.launchIn(viewModelScope)

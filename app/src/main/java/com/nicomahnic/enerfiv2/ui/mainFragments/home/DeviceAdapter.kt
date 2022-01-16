@@ -3,11 +3,10 @@ package com.nicomahnic.enerfiv2.ui.mainFragments.home
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.nicomahnic.enerfiv2.R
 import com.nicomahnic.enerfiv2.databinding.ItemDeviceBinding
-import com.nicomahnic.enerfiv2.ui.mainFragments.home.model.Device
+import com.nicomahnic.enerfiv2.model.local.Device
 
 class DeviceAdapter(
     private val devices : List<Device>,
@@ -32,7 +31,7 @@ class DeviceAdapter(
         private val binding = ItemDeviceBinding.bind(view)
 
         fun render(device: Device){
-            binding.tvDeviceName.text = device.name
+            binding.tvDeviceName.text = device.deviceName
         }
 
         fun getItem (device: Device, position: Int): Unit {

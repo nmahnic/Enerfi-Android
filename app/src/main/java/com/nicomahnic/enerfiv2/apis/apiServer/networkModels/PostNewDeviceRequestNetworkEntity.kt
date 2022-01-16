@@ -5,8 +5,17 @@ import com.google.gson.annotations.SerializedName
 
 data class PostNewDeviceRequestNetworkEntity (
 
-        @SerializedName("macAddress")
+        @SerializedName("mac")
         @Expose
-        val macAddress: String
+        val macAddress: String,
+        @SerializedName("name")
+        @Expose
+        val deviceName: String,
+        @SerializedName("email")
+        @Expose
+        val mail: String,
+        @SerializedName("passwd")
+        @Expose
+        val passwd: String
 
 )

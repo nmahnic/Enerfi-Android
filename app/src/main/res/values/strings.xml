@@ -22,4 +22,9 @@
 
     <string name="selected_item">Selected item:</string>
     <string name="userName">Full Name</string>
+    <string name="unknown">Unknown</string>
+    <string name="deviceName">Device Name</string>
+    <string name="network_credentials">Network Credentials</string>
+    <string name="save_credentials">SAVE CREDENTIALS</string>
+    <string name="mac_address">MAC address:</string>
 </resources>

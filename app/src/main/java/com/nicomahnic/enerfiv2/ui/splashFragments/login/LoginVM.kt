@@ -19,9 +19,7 @@ class LoginVM @ViewModelInject constructor(
 ) : BaseViewModel<LoginDataState, LoginAction, LoginEvent>(){
 
     init {
-        viewState = LoginDataState(
-            state = LoginState.Initial
-        )
+        viewState = LoginDataState( state = LoginState.Initial )
     }
 
     override fun process(viewEvent: LoginEvent) {
@@ -31,14 +29,10 @@ class LoginVM @ViewModelInject constructor(
                 checkUsersByEmailLocal(viewEvent.mail, viewEvent.passwd)
             }
             is LoginEvent.Register -> {
-                viewState = viewState.copy(
-                    state = LoginState.GoToRegister
-                )
+                viewState = viewState.copy( state = LoginState.GoToRegister )
             }
             is LoginEvent.GoToHome -> {
-                viewState = viewState.copy(
-                    state = LoginState.GoToHome
-                )
+                viewState = viewState.copy( state = LoginState.GoToHome )
             }
         }
     }
@@ -68,10 +62,10 @@ class LoginVM @ViewModelInject constructor(
             postValidateUser.request(PostUserRequest(mail, passwd))
                 .catch { e -> Log.d("NM", "checkUsersByEmailRemote Exception: $e") }
                 .onEach { res ->
-                    when(res){
+                    viewState = when(res){
                         is DataState.Success -> {
                             Log.d("NM", "checkUsersByEmailRemote Success: ${res.data}")
-                            viewState = if(res.data.responseCode == 200){
+                            if(res.data.responseCode == 200){
                                 viewState.copy(state = LoginState.Validated)
                             }else{
                                 viewState.copy(state = LoginState.NotValidated)
@@ -79,7 +73,7 @@ class LoginVM @ViewModelInject constructor(
                         }
                         is DataState.Failure -> {
                             Log.d("NM", "checkUsersByEmailRemote Failure: ${res.exception}")
-                            viewState = viewState.copy(state = LoginState.FailureServer)
+                            viewState.copy(state = LoginState.FailureServer)
                         }
                     }
                 }.launchIn(viewModelScope)

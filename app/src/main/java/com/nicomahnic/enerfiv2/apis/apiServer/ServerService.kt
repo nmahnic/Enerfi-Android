@@ -6,8 +6,8 @@ import retrofit2.http.*
 interface ServerService {
 
     @Headers("Content-Type: application/json")
-    @POST("/Device")
-    suspend fun postDeviceRequest(@Body req: PostNewDeviceRequestNetworkEntity): PostNewDeviceResponseNetworkEntity
+    @POST("/dum/")
+    suspend fun postNewDeviceRequest(@Body req: PostNewDeviceRequestNetworkEntity): PostGeneralResponseNetworkEntity
 
     @Headers("Content-Type: application/json")
     @POST("/user/")

@@ -14,13 +14,19 @@ class PostNewDeviceRequestMapper @Inject constructor():
 
     override fun mapFromEntity(entity: PostNewDeviceRequestNetworkEntity): PostNewDeviceRequest {
         return PostNewDeviceRequest(
-            macAddress = entity.macAddress
+            macAddress = entity.macAddress,
+            deviceName = entity.deviceName,
+            mail = entity.mail,
+            passwd = entity.passwd
         )
     }
 
     override fun mapToEntity(domainModel: PostNewDeviceRequest): PostNewDeviceRequestNetworkEntity {
         return PostNewDeviceRequestNetworkEntity(
-            macAddress = domainModel.macAddress
+            macAddress = domainModel.macAddress,
+            deviceName = domainModel.deviceName,
+            mail = domainModel.mail,
+            passwd = domainModel.passwd
         )
     }
 }
