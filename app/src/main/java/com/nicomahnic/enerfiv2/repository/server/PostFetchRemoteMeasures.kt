@@ -1,7 +1,6 @@
 package com.nicomahnic.enerfiv2.repository.server
 
 import android.util.Log
-import com.nicomahnic.enerfiv2.apis.apiServer.GeneralResponseMapper
 import com.nicomahnic.enerfiv2.apis.apiServer.MeasureByEmailAndDumResponseMapper
 import com.nicomahnic.enerfiv2.apis.apiServer.ServerHelper
 import com.nicomahnic.enerfiv2.apis.apiServer.PostUserAndDumRequestMapper

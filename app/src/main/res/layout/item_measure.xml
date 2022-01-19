@@ -1,0 +1,75 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_package_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:backgroundTintMode="add"
+    app:cardElevation="8dp">
+    
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/canva_constraint_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/measure_chart"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" >
+        </com.github.mikephil.charting.charts.LineChart>
+
+        <TextView
+            android:id="@+id/tv_date_legend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date: "
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/measure_chart" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:textAlignment="center"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            app:layout_constraintStart_toEndOf="@+id/tv_date_legend"
+            app:layout_constraintTop_toBottomOf="@+id/measure_chart" />
+
+        <TextView
+            android:id="@+id/tv_measure_legend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Voltage: "
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_date_legend"/>
+
+        <TextView
+            android:id="@+id/tv_measure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:textAlignment="center"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            app:layout_constraintStart_toEndOf="@+id/tv_measure_legend"
+            app:layout_constraintTop_toBottomOf="@+id/tv_date_legend" />
+
+        <TextView
+            android:id="@+id/tv_measure_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            app:layout_constraintStart_toEndOf="@+id/tv_measure"
+            app:layout_constraintTop_toBottomOf="@+id/tv_date_legend" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    
+</androidx.cardview.widget.CardView>

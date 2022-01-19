@@ -7,6 +7,7 @@ import com.nicomahnic.enerfiv2.model.server.response.DevicesByEmailResponse
 import com.nicomahnic.enerfiv2.model.server.response.GeneralResponse
 import com.nicomahnic.enerfiv2.model.server.response.MeasureByEmailAndDumResponse
 import com.nicomahnic.enerfiv2.utils.EntityMapper
+import java.sql.Timestamp
 import javax.inject.Inject
 
 class GeneralResponseMapper @Inject constructor():

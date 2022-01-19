@@ -1,7 +1,7 @@
 package com.nicomahnic.enerfiv2.ui.mainFragments.measure
 
 import com.github.mikephil.charting.data.Entry
-import com.nicomahnic.enerfiv2.model.local.Voltage
+import java.sql.Timestamp
 
 // STATE
 data class MeasureDataState(

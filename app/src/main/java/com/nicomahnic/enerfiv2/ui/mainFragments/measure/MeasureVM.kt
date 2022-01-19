@@ -1,14 +1,10 @@
 package com.nicomahnic.enerfiv2.ui.mainFragments.measure
 
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import com.github.mikephil.charting.data.Entry
-import com.nicomahnic.enerfiv2.model.local.Voltage
 import com.nicomahnic.enerfiv2.model.server.request.PostUserAndDumRequest
-import com.nicomahnic.enerfiv2.model.server.request.PostUserRequest
 import com.nicomahnic.enerfiv2.repository.local.GetVoltage
 import com.nicomahnic.enerfiv2.repository.local.InsertVoltage
 import com.nicomahnic.enerfiv2.repository.server.PostFetchRemoteMeasures
@@ -20,8 +16,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class MeasureVM @ViewModelInject constructor(
-    private val getVoltage: GetVoltage,
-    private val insertVoltage: InsertVoltage,
     private val postFetchRemoteMeasures: PostFetchRemoteMeasures
 ) : BaseViewModel<MeasureDataState, MeasureAction, MeasureEvent>(){
 
@@ -48,14 +42,12 @@ class MeasureVM @ViewModelInject constructor(
                     when(res){
                         is DataState.Success -> {
                             Log.d("NM", "postFetchRemoteMeasures Success: ${res.data}")
-                            val entries = mutableListOf<Entry>()
-                            res.data.forEachIndexed { index, measure ->
-                                entries.add(Entry(index.toFloat(), measure.vrms))
-                            }
+                            val timestamp = res.data.map { it.timeStamp }
                             viewState = viewState.copy(
                                 state = MeasureState.Plot,
-                                voltage = entries,
-                                timeStamp = res.data.map { it.timeStamp }
+                                voltage = res.data.mapIndexed { index, measure -> Entry(index.toFloat(), measure.vrms) },
+                                current = res.data.mapIndexed { index, measure -> Entry(index.toFloat(), measure.irms) },
+                                timeStamp = timestamp
                             )
                         }
                         is DataState.Failure -> {

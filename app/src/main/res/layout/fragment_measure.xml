@@ -6,147 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".ui.mainFragments.measure.MeasureFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_measures"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:scrollbars="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/voltage_chart"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_date_legend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Date:"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/voltage_chart" />
-
-        <TextView
-            android:id="@+id/tv_date"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="@string/dash"
-            android:textAlignment="center"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            app:layout_constraintEnd_toStartOf="@+id/tv_voltage_legend"
-            app:layout_constraintStart_toEndOf="@+id/tv_date_legend"
-            app:layout_constraintTop_toBottomOf="@+id/voltage_chart" />
-
-        <TextView
-            android:id="@+id/tv_voltage_legend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Voltage: "
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            app:layout_constraintEnd_toStartOf="@+id/tv_voltage"
-            app:layout_constraintStart_toEndOf="@+id/tv_date"
-            app:layout_constraintTop_toBottomOf="@+id/voltage_chart" />
-
-        <TextView
-            android:id="@+id/tv_voltage"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:text="@string/dash"
-            android:textAlignment="center"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            app:layout_constraintStart_toEndOf="@+id/tv_voltage_legend"
-            app:layout_constraintTop_toBottomOf="@+id/voltage_chart" />
-
-        <TextView
-            android:id="@+id/tv_voltage_legend2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="V"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            app:layout_constraintStart_toEndOf="@+id/tv_voltage"
-            app:layout_constraintTop_toBottomOf="@+id/voltage_chart" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
-
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/current_chart"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_date_current_legend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Date:"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/current_chart" />
-
-        <TextView
-            android:id="@+id/tv_date_current"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="@string/dash"
-            android:textAlignment="center"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            app:layout_constraintEnd_toStartOf="@+id/tv_current_legend"
-            app:layout_constraintStart_toEndOf="@+id/tv_date_current_legend"
-            app:layout_constraintTop_toBottomOf="@+id/current_chart" />
-
-        <TextView
-            android:id="@+id/tv_current_legend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Current: "
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            app:layout_constraintEnd_toStartOf="@+id/tv_current"
-            app:layout_constraintStart_toEndOf="@+id/tv_date_current"
-            app:layout_constraintTop_toBottomOf="@+id/current_chart" />
-
-        <TextView
-            android:id="@+id/tv_current"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:text="@string/dash"
-            android:textAlignment="center"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            app:layout_constraintStart_toEndOf="@+id/tv_current_legend"
-            app:layout_constraintTop_toBottomOf="@+id/current_chart" />
-
-        <TextView
-            android:id="@+id/tv_current_legend2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="A"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            app:layout_constraintStart_toEndOf="@+id/tv_current"
-            app:layout_constraintTop_toBottomOf="@+id/current_chart" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <Button
-        android:id="@+id/btn_add_random_data"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Random Data"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="20dp"
+        android:backgroundTint="@color/green_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
+        app:srcCompat="@drawable/ic_baseline_refresh_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

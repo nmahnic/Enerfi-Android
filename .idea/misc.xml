@@ -9,6 +9,7 @@
         <entry key="..\:/Users/NM/Documents/AndroidEnerfi/EnerfiV2/app/src/main/res/drawable-v24/ic_settings.xml" value="0.18177083333333333" />
         <entry key="..\:/Users/NM/Documents/AndroidEnerfi/EnerfiV2/app/src/main/res/drawable/ic_baseline_add_circle_24.xml" value="0.34882533197139937" />
         <entry key="..\:/Users/NM/Documents/AndroidEnerfi/EnerfiV2/app/src/main/res/drawable/ic_baseline_login_24.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/NM/Documents/AndroidEnerfi/EnerfiV2/app/src/main/res/drawable/ic_baseline_refresh_24.xml" value="0.35625" />
         <entry key="..\:/Users/NM/Documents/AndroidEnerfi/EnerfiV2/app/src/main/res/drawable/side_nav_bar.xml" value="0.3452502553626149" />
         <entry key="..\:/Users/NM/Documents/AndroidEnerfi/EnerfiV2/app/src/main/res/drawable/splash_background.xml" value="0.33645833333333336" />
         <entry key="..\:/Users/NM/Documents/AndroidEnerfi/EnerfiV2/app/src/main/res/layout/activity_main.xml" value="0.1" />
@@ -27,6 +28,7 @@
         <entry key="..\:/Users/NM/Documents/AndroidEnerfi/EnerfiV2/app/src/main/res/layout/fragment_temp_menu.xml" value="0.3359375" />
         <entry key="..\:/Users/NM/Documents/AndroidEnerfi/EnerfiV2/app/src/main/res/layout/item_device.xml" value="0.33" />
         <entry key="..\:/Users/NM/Documents/AndroidEnerfi/EnerfiV2/app/src/main/res/layout/item_dropdown.xml" value="0.3359375" />
+        <entry key="..\:/Users/NM/Documents/AndroidEnerfi/EnerfiV2/app/src/main/res/layout/item_measure.xml" value="0.5077120822622108" />
         <entry key="..\:/Users/NM/Documents/AndroidEnerfi/EnerfiV2/app/src/main/res/layout/nav_header_main.xml" value="0.75" />
         <entry key="..\:/Users/NM/Documents/AndroidEnerfi/EnerfiV2/app/src/main/res/menu/activity_main_drawer.xml" value="0.33541666666666664" />
         <entry key="..\:/Users/NM/Documents/AndroidEnerfi/EnerfiV2/app/src/main/res/menu/bottom_navigation_bar.xml" value="0.16145833333333334" />
