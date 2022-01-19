@@ -6,7 +6,12 @@ import com.nicomahnic.enerfiv2.model.local.Voltage
 // STATE
 data class MeasureDataState(
     val exception: Exception? = null,
-    val data: List<Entry>? = null,
+    val voltage: List<Entry>? = null,
+    val current: List<Entry>? = null,
+    val thd: Float? = null,
+    val powerFactor: Float? = null,
+    val cosPhi: Float? = null,
+    val timeStamp: List<String>? = null,
     val state: MeasureState
 )
 
@@ -17,8 +22,7 @@ sealed class MeasureAction {
 
 // VIEW EVENT
 sealed class MeasureEvent {
-    object LoadData: MeasureEvent()
-    data class AddPoint(val data: Voltage): MeasureEvent()
+    data class LoadData(val mail: String, val passwd: String, val mac: String): MeasureEvent()
 }
 
 // VIEW STATE

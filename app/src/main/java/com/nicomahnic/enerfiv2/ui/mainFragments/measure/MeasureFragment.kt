@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.Legend.LegendForm
 import com.github.mikephil.charting.components.XAxis
@@ -20,6 +21,7 @@ import com.nicomahnic.enerfiv2.databinding.FragmentMeasureBinding
 import com.nicomahnic.enerfiv2.model.local.Voltage
 import com.nicomahnic.enerfiv2.utils.core.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import java.util.ArrayList
 
 
@@ -27,9 +29,11 @@ import java.util.ArrayList
 class MeasureFragment : BaseFragment<MeasureDataState, MeasureAction, MeasureEvent, MeasureVM>
     (R.layout.fragment_measure)
 {
+    val args: MeasureFragmentArgs by navArgs()
     override val viewModel: MeasureVM by viewModels()
     private lateinit var binding: FragmentMeasureBinding
     private lateinit var v: View
+    private lateinit var timeStamps: List<String>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,50 +42,53 @@ class MeasureFragment : BaseFragment<MeasureDataState, MeasureAction, MeasureEve
 
         // set listener
         SignalChange.binding = binding
-        binding.chart.setOnChartValueSelectedListener(SignalChange)
+        binding.voltageChart.setOnChartValueSelectedListener(SignalChange)
         binding.btnAddRandomData.setOnClickListener(clickListenerAddData)
 
         activity?.actionBar?.title = "CubicLineChart"
 
         // no description text
-        binding.chart.description.isEnabled = true
-        binding.chart.description.text = "by Enerfi"
+        binding.voltageChart.description.isEnabled = true
+        binding.voltageChart.description.text = "by Enerfi"
 
         // enable touch gestures
-        binding.chart.setTouchEnabled(true)
+        binding.voltageChart.setTouchEnabled(true)
 
         // enable scaling and dragging
-        binding.chart.isDragEnabled = true
-        binding.chart.setScaleEnabled(true)
+        binding.voltageChart.isDragEnabled = true
+        binding.voltageChart.setScaleEnabled(true)
 
         // if disabled, scaling can be done on x- and y-axis separately
-        binding.chart.setPinchZoom(false)
+        binding.voltageChart.setPinchZoom(false)
 
-        binding.chart.setDrawGridBackground(false)
+        binding.voltageChart.setDrawGridBackground(false)
 
-        val x: XAxis = binding.chart.xAxis
+        val x: XAxis = binding.voltageChart.xAxis
         x.isEnabled = false
 
-        val y: YAxis = binding.chart.axisLeft
+        val y: YAxis = binding.voltageChart.axisLeft
         y.setLabelCount(6, false)
         y.textColor = Color.BLACK
+        y.axisMinimum = 170F
+        y.axisMaximum = 250F
+
         y.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
         y.setDrawGridLines(false)
         y.axisLineColor = Color.BLACK
 
-        binding.chart.axisRight.isEnabled = false
+        binding.voltageChart.axisRight.isEnabled = false
 
-        binding.chart.legend.isEnabled = true
+        binding.voltageChart.legend.isEnabled = true
 
         // get the legend (only possible after setting data)
-        val l: Legend = binding.chart.legend
+        val l: Legend = binding.voltageChart.legend
 
         // draw legend entries as lines
         l.form = LegendForm.LINE
 
-        binding.chart.animateXY(2000, 50)
+        binding.voltageChart.animateXY(2000, 50)
 
-        viewModel.process(MeasureEvent.LoadData)
+        viewModel.process(MeasureEvent.LoadData(args.mail, args.passwd, args.mac))
     }
 
     object SignalChange : OnChartValueSelectedListener {
@@ -91,9 +98,9 @@ class MeasureFragment : BaseFragment<MeasureDataState, MeasureAction, MeasureEve
         override fun onValueSelected(e: Entry?, h: Highlight?) {
             Log.d("NM","Entry selected $e")
             val x = "%.1f".format(e?.x)
-            binding.tvData1.text = x
+            binding.tvDate.text = x
             val y = "%.1f".format(e?.y)
-            binding.tvData2.text = y
+            binding.tvVoltage.text = y
         }
 
         override fun onNothingSelected() {
@@ -105,10 +112,11 @@ class MeasureFragment : BaseFragment<MeasureDataState, MeasureAction, MeasureEve
     override fun renderViewState(viewState: MeasureDataState) {
         when (viewState.state) {
             is MeasureState.AddPointToPlot -> {
-                addPointToPlot(viewState.data!!.first())
+                addPointToPlot(viewState.voltage!!.first())
             }
             is MeasureState.Plot -> {
-                setData(viewState.data)
+                timeStamps = viewState.timeStamp!!
+                setData(viewState.voltage)
             }
             else -> {
                 Log.d("NM", "${viewState.state}")
@@ -125,16 +133,16 @@ class MeasureFragment : BaseFragment<MeasureDataState, MeasureAction, MeasureEve
     }
 
     private fun updateData(data: LineData){
-        binding.chart.notifyDataSetChanged()
-        binding.chart.data = data
-        binding.chart.setVisibleXRangeMaximum(30F)
-        binding.chart.moveViewToX(data.entryCount.toFloat())
-        binding.chart.invalidate()
+        binding.voltageChart.notifyDataSetChanged()
+        binding.voltageChart.data = data
+        binding.voltageChart.setVisibleXRangeMaximum(30F)
+        binding.voltageChart.moveViewToX(data.entryCount.toFloat())
+        binding.voltageChart.invalidate()
     }
 
     private fun addPointToPlot(entry: Entry) {
         Log.d("NM","onClickListener")
-        val data: LineData = binding.chart.data
+        val data: LineData = binding.voltageChart.data
 
         data.addEntry(entry, 0)
         data.notifyDataChanged()
@@ -142,26 +150,24 @@ class MeasureFragment : BaseFragment<MeasureDataState, MeasureAction, MeasureEve
     }
 
     private val clickListenerAddData = View.OnClickListener {
-        val data: LineData = binding.chart.data
+        val data: LineData = binding.voltageChart.data
         val set = data.getDataSetByIndex(0)
 
         val x = set!!.entryCount.toFloat()
         val y = (Math.random() * 40).toFloat() + 200F
         val point = Voltage(x,y,"MAAAASH")
-
-        viewModel.process(MeasureEvent.AddPoint(point))
     }
 
     private fun setData(entries: List<Entry>?) {
 
         val set1: LineDataSet
-        if (binding.chart.data != null &&
-            binding.chart.data.dataSetCount > 0
+        if (binding.voltageChart.data != null &&
+            binding.voltageChart.data.dataSetCount > 0
         ) {
-            set1 = binding.chart.data.getDataSetByIndex(0) as LineDataSet
+            set1 = binding.voltageChart.data.getDataSetByIndex(0) as LineDataSet
             set1.values = entries
-            binding.chart.data.notifyDataChanged()
-            binding.chart.notifyDataSetChanged()
+            binding.voltageChart.data.notifyDataChanged()
+            binding.voltageChart.notifyDataSetChanged()
         } else {
             // create a dataset and give it a type
             val values = ArrayList<Entry>()
@@ -189,7 +195,7 @@ class MeasureFragment : BaseFragment<MeasureDataState, MeasureAction, MeasureEve
             set1.fillColor = resources.getColor(R.color.startColor)
 
             set1.fillFormatter = IFillFormatter { dataSet, dataProvider ->
-                binding.chart.axisLeft.axisMinimum
+                binding.voltageChart.axisLeft.axisMinimum
             }
 
             // create a data object with the data sets

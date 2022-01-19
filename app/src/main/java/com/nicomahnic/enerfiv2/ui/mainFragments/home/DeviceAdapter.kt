@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.nicomahnic.enerfiv2.R
 import com.nicomahnic.enerfiv2.databinding.ItemDeviceBinding
-import com.nicomahnic.enerfiv2.model.server.response.PostDevicesByEmailResponse
+import com.nicomahnic.enerfiv2.model.server.response.DevicesByEmailResponse
 
 class DeviceAdapter(
-    private val devices : List<PostDevicesByEmailResponse>,
-    private val onItemClick: (Int, PostDevicesByEmailResponse) -> Unit
+    private val devices : List<DevicesByEmailResponse>,
+    private val onItemClick: (Int, DevicesByEmailResponse) -> Unit
 ) : RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeviceViewHolder {
@@ -30,11 +30,11 @@ class DeviceAdapter(
 
         private val binding = ItemDeviceBinding.bind(view)
 
-        fun render(device: PostDevicesByEmailResponse){
+        fun render(device: DevicesByEmailResponse){
             binding.tvDeviceName.text = device.name
         }
 
-        fun getItem (device: PostDevicesByEmailResponse, position: Int): Unit {
+        fun getItem (device: DevicesByEmailResponse, position: Int): Unit {
             return itemView.setOnClickListener { onItemClick(position, device) }
         }
     }

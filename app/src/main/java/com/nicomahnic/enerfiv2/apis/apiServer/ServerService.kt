@@ -7,19 +7,21 @@ interface ServerService {
 
     @Headers("Content-Type: application/json")
     @POST("/dum/")
-    suspend fun postNewDeviceRequest(@Body req: PostNewDeviceRequestNetworkEntity): PostGeneralResponseNetworkEntity
+    suspend fun postNewDeviceRequest(@Body req: PostNewDeviceRequestNetworkEntity): GeneralResponseNetworkEntity
 
     @Headers("Content-Type: application/json")
     @POST("/user/")
-    suspend fun postNewUserRequest(@Body req: PostNewUserRequestNetworkEntity): PostGeneralResponseNetworkEntity
+    suspend fun postNewUserRequest(@Body req: PostNewUserRequestNetworkEntity): GeneralResponseNetworkEntity
 
     @Headers("Content-Type: application/json")
     @POST("/validateuser/")
-    suspend fun postValidateUserRequest(@Body req: PostUserRequestNetworkEntity): PostGeneralResponseNetworkEntity
+    suspend fun postValidateUserRequest(@Body req: PostUserRequestNetworkEntity): GeneralResponseNetworkEntity
 
     @Headers("Content-Type: application/json")
     @POST("/listfulldumbyuser/")
-    suspend fun postDevicesByEmailRequest(@Body req: PostUserRequestNetworkEntity) : List<PostDevicesByEmailResponseNetworkEntity>
+    suspend fun postDevicesByEmailRequest(@Body req: PostUserRequestNetworkEntity) : List<DevicesByEmailResponseNetworkEntity>
 
-
+    @Headers("Content-Type: application/json")
+    @POST("/listmeasurebyuser/")
+    suspend fun postFetchRemoteMeasures(@Body req: PostUserAndDumRequestNetworkEntity) : List<MeasureByEmailAndDumResponseNetworkEntity>
 }

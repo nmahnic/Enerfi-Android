@@ -1,11 +1,11 @@
 package com.nicomahnic.enerfiv2.repository.server
 
 import android.util.Log
-import com.nicomahnic.enerfiv2.apis.apiServer.PostGeneralResponseMapper
+import com.nicomahnic.enerfiv2.apis.apiServer.GeneralResponseMapper
 import com.nicomahnic.enerfiv2.apis.apiServer.PostNewDeviceRequestMapper
 import com.nicomahnic.enerfiv2.apis.apiServer.ServerHelper
 import com.nicomahnic.enerfiv2.model.server.request.PostNewDeviceRequest
-import com.nicomahnic.enerfiv2.model.server.response.PostGeneralResponse
+import com.nicomahnic.enerfiv2.model.server.response.GeneralResponse
 import com.nicomahnic.enerfiv2.utils.DataState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -14,11 +14,11 @@ import javax.inject.Inject
 
 class PostNewDevice @Inject constructor(
     private val apiHelper: ServerHelper,
-    private val txnResponseMapper: PostGeneralResponseMapper,
+    private val txnResponseMapper: GeneralResponseMapper,
     private val txnRequestMapper: PostNewDeviceRequestMapper
 ) {
 
-    suspend fun request(req: PostNewDeviceRequest): Flow<DataState<PostGeneralResponse>> = flow {
+    suspend fun request(req: PostNewDeviceRequest): Flow<DataState<GeneralResponse>> = flow {
 
         try {
             Log.d("NM", "PostNewDevice Request -> ${req}")

@@ -5,11 +5,12 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nicomahnic.enerfiv2.R
 import com.nicomahnic.enerfiv2.databinding.FragmentHomeBinding
-import com.nicomahnic.enerfiv2.model.server.response.PostDevicesByEmailResponse
+import com.nicomahnic.enerfiv2.model.server.response.DevicesByEmailResponse
 import com.nicomahnic.enerfiv2.utils.core.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,6 +22,8 @@ class HomeFragment : BaseFragment<HomeDataState, HomeAction, HomeEvent, HomeVM>
     override val viewModel: HomeVM by viewModels()
     private lateinit var binding: FragmentHomeBinding
     private lateinit var v: View
+    private lateinit var mail: String
+    private lateinit var passwd: String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -28,21 +31,23 @@ class HomeFragment : BaseFragment<HomeDataState, HomeAction, HomeEvent, HomeVM>
         v = view
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        val mail = prefs.getString("userMail","")!!
-        val passwd = prefs.getString("password","")!!
+        mail = prefs.getString("userMail","")!!
+        passwd = prefs.getString("password","")!!
 
         viewModel.process(HomeEvent.GetDevices(mail,passwd))
 
     }
 
-    private fun initReycleView(devices: List<PostDevicesByEmailResponse>){
+    private fun initReycleView(devices: List<DevicesByEmailResponse>){
         val recyclerView = binding.rvDevices
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = DeviceAdapter(devices) { pos, device -> onItemSelected(pos,device) }
     }
 
-    private fun onItemSelected(pos: Int, device: PostDevicesByEmailResponse){
-        val action = HomeFragmentDirections.actionHomeFragmentToMeasureFragment()
+    private fun onItemSelected(pos: Int, device: DevicesByEmailResponse){
+        val action = HomeFragmentDirections.actionHomeFragmentToMeasureFragment(
+            mac = device.mac, name = device.name, mail = mail, passwd = passwd
+        )
         v.findNavController().navigate(action)
     }
 

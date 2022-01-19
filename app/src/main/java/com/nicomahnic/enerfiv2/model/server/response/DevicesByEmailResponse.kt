@@ -1,6 +1,6 @@
 package com.nicomahnic.enerfiv2.model.server.response
 
-data class PostDevicesByEmailResponse(
+data class DevicesByEmailResponse(
     val name: String,
     val mac: String
 )

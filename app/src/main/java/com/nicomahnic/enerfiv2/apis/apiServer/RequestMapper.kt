@@ -2,9 +2,11 @@ package com.nicomahnic.enerfiv2.apis.apiServer
 
 import com.nicomahnic.enerfiv2.apis.apiServer.networkModels.PostNewDeviceRequestNetworkEntity
 import com.nicomahnic.enerfiv2.apis.apiServer.networkModels.PostNewUserRequestNetworkEntity
+import com.nicomahnic.enerfiv2.apis.apiServer.networkModels.PostUserAndDumRequestNetworkEntity
 import com.nicomahnic.enerfiv2.apis.apiServer.networkModels.PostUserRequestNetworkEntity
 import com.nicomahnic.enerfiv2.model.server.request.PostNewDeviceRequest
 import com.nicomahnic.enerfiv2.model.server.request.PostNewUserRequest
+import com.nicomahnic.enerfiv2.model.server.request.PostUserAndDumRequest
 import com.nicomahnic.enerfiv2.model.server.request.PostUserRequest
 import com.nicomahnic.enerfiv2.utils.EntityMapper
 import javax.inject.Inject
@@ -67,6 +69,27 @@ class PostUserRequestMapper @Inject constructor():
         return PostUserRequestNetworkEntity(
             mail = domainModel.mail,
             passwd = domainModel.passwd
+        )
+    }
+
+}
+
+class PostUserAndDumRequestMapper @Inject constructor():
+    EntityMapper<PostUserAndDumRequestNetworkEntity, PostUserAndDumRequest> {
+
+    override fun mapFromEntity(entity: PostUserAndDumRequestNetworkEntity): PostUserAndDumRequest {
+        return PostUserAndDumRequest(
+            mail = entity.mail,
+            passwd = entity.passwd,
+            mac = entity.mac
+        )
+    }
+
+    override fun mapToEntity(domainModel: PostUserAndDumRequest): PostUserAndDumRequestNetworkEntity {
+        return PostUserAndDumRequestNetworkEntity(
+            mail = domainModel.mail,
+            passwd = domainModel.passwd,
+            mac = domainModel.mac
         )
     }
 

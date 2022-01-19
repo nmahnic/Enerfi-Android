@@ -1,11 +1,11 @@
 package com.nicomahnic.enerfiv2.ui.mainFragments.home
 
-import com.nicomahnic.enerfiv2.model.server.response.PostDevicesByEmailResponse
+import com.nicomahnic.enerfiv2.model.server.response.DevicesByEmailResponse
 
 // STATE
 data class HomeDataState(
     val exception: Exception? = null,
-    val data: List<PostDevicesByEmailResponse>? = null,
+    val data: List<DevicesByEmailResponse>? = null,
     val state: HomeState
 )
 
