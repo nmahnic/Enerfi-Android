@@ -1,16 +1,16 @@
 package com.nicomahnic.enerfiv2.ui.mainFragments.measure
 
 import com.github.mikephil.charting.data.Entry
-import java.sql.Timestamp
 
 // STATE
 data class MeasureDataState(
     val exception: Exception? = null,
     val voltage: List<Entry>? = null,
     val current: List<Entry>? = null,
-    val thd: Float? = null,
-    val powerFactor: Float? = null,
-    val cosPhi: Float? = null,
+    val activePower: List<Entry>? = null,
+    val thd: String? = null,
+    val powerFactor: String? = null,
+    val cosPhi: String? = null,
     val timeStamp: List<String>? = null,
     val state: MeasureState
 )

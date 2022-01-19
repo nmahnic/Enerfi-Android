@@ -5,14 +5,11 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import com.github.mikephil.charting.data.Entry
 import com.nicomahnic.enerfiv2.model.server.request.PostUserAndDumRequest
-import com.nicomahnic.enerfiv2.repository.local.GetVoltage
-import com.nicomahnic.enerfiv2.repository.local.InsertVoltage
 import com.nicomahnic.enerfiv2.repository.server.PostFetchRemoteMeasures
 import com.nicomahnic.enerfiv2.utils.DataState
 import com.nicomahnic.enerfiv2.utils.core.BaseViewModel
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class MeasureVM @ViewModelInject constructor(
@@ -38,7 +35,7 @@ class MeasureVM @ViewModelInject constructor(
         viewModelScope.launch {
             postFetchRemoteMeasures.request(PostUserAndDumRequest(mail, passwd,mac))
                 .catch { e -> Log.d("NM", "postFetchRemoteMeasures Exception: $e") }
-                .onEach { res ->
+                .collect { res ->
                     when(res){
                         is DataState.Success -> {
                             Log.d("NM", "postFetchRemoteMeasures Success: ${res.data}")
@@ -47,14 +44,18 @@ class MeasureVM @ViewModelInject constructor(
                                 state = MeasureState.Plot,
                                 voltage = res.data.mapIndexed { index, measure -> Entry(index.toFloat(), measure.vrms) },
                                 current = res.data.mapIndexed { index, measure -> Entry(index.toFloat(), measure.irms) },
-                                timeStamp = timestamp
+                                activePower = res.data.mapIndexed { index, measure -> Entry(index.toFloat(), measure.activePower) },
+                                timeStamp = timestamp,
+                                cosPhi = res.data.last().cosPhi,
+                                thd = res.data.last().thd,
+                                powerFactor = res.data.last().powerFactor
                             )
                         }
                         is DataState.Failure -> {
                             Log.d("NM", "postFetchRemoteMeasures Failure: ${res.exception}")
                         }
                     }
-                }.launchIn(viewModelScope)
+                }
         }
     }
 

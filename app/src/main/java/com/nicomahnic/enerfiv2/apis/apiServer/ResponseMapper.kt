@@ -7,7 +7,6 @@ import com.nicomahnic.enerfiv2.model.server.response.DevicesByEmailResponse
 import com.nicomahnic.enerfiv2.model.server.response.GeneralResponse
 import com.nicomahnic.enerfiv2.model.server.response.MeasureByEmailAndDumResponse
 import com.nicomahnic.enerfiv2.utils.EntityMapper
-import java.sql.Timestamp
 import javax.inject.Inject
 
 class GeneralResponseMapper @Inject constructor():
@@ -66,9 +65,9 @@ class MeasureByEmailAndDumResponseMapper @Inject constructor():
             vrms = entity.vrms,
             irms = entity.irms,
             activePower = entity.activePower,
-            powerFactor = entity.powerFactor,
-            thd = entity.thd,
-            cosPhi = entity.cosPhi,
+            powerFactor = "%.2f".format(entity.powerFactor*100)+"%",
+            thd = "%.2f".format(entity.thd*100)+"%",
+            cosPhi = "%.2f".format(entity.cosPhi*100)+"%",
             timeStamp = entity.timeStamp
         )
     }
@@ -78,9 +77,9 @@ class MeasureByEmailAndDumResponseMapper @Inject constructor():
             vrms = domainModel.vrms,
             irms = domainModel.irms,
             activePower = domainModel.activePower,
-            powerFactor = domainModel.powerFactor,
-            thd = domainModel.thd,
-            cosPhi = domainModel.cosPhi,
+            powerFactor = 0F,
+            thd = 0F,
+            cosPhi = 0F,
             timeStamp = domainModel.timeStamp
         )
     }

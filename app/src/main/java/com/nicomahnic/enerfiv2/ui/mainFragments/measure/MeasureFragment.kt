@@ -1,30 +1,15 @@
 package com.nicomahnic.enerfiv2.ui.mainFragments.measure
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.components.Legend.LegendForm
-import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.YAxis
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.formatter.IFillFormatter
-import com.github.mikephil.charting.highlight.Highlight
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.nicomahnic.enerfiv2.R
 import com.nicomahnic.enerfiv2.databinding.FragmentMeasureBinding
-import com.nicomahnic.enerfiv2.model.local.Voltage
-import com.nicomahnic.enerfiv2.ui.mainFragments.home.DeviceAdapter
 import com.nicomahnic.enerfiv2.utils.core.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import java.util.ArrayList
 
 
 @AndroidEntryPoint
@@ -35,7 +20,6 @@ class MeasureFragment : BaseFragment<MeasureDataState, MeasureAction, MeasureEve
     override val viewModel: MeasureVM by viewModels()
     private lateinit var binding: FragmentMeasureBinding
     private lateinit var v: View
-    private lateinit var timeStamps: List<String>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,9 +35,15 @@ class MeasureFragment : BaseFragment<MeasureDataState, MeasureAction, MeasureEve
     override fun renderViewState(viewState: MeasureDataState) {
         when (viewState.state) {
             is MeasureState.Plot -> {
+                binding.edtCosPhi.setText(viewState.cosPhi)
+                binding.edtThd.setText(viewState.thd)
+                binding.edtPf.setText(viewState.powerFactor)
+                binding.constraintLayout2.visibility = View.VISIBLE
+
                 val charts = listOf(
                     MeasureChart(viewState.voltage, "V", "Voltage:", viewState.timeStamp),
-                    MeasureChart(viewState.current, "A", "Current:", viewState.timeStamp)
+                    MeasureChart(viewState.current, "A", "Current:", viewState.timeStamp),
+                    MeasureChart(viewState.activePower, "W", "Power:", viewState.timeStamp),
                 )
                 val recyclerView = binding.rvMeasures
 //                recyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL, false)
