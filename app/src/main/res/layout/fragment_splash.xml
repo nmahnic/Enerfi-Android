@@ -6,15 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".ui.splashFragments.splash.SplashFragment">
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading_check"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
         android:layout_marginTop="280dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_url="https://assets7.lottiefiles.com/packages/lf20_x9pEKm.json" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

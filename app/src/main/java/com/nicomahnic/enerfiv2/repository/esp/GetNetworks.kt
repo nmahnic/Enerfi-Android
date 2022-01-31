@@ -20,6 +20,8 @@ class GetNetworks @Inject constructor(
         try{
             Log.d("NM", "GET NETWORKS REQUEST")
             val res = apiHelper.getNetworksReq()
+            Log.d("NM", "Status Response  -> responseCode=${res.responseCode}")
+            Log.d("NM", "Status Response  -> mackAddress=${res.macAddress}")
             Log.d("NM", "Status Response  -> networks=${res.networks}")
             Log.d("NM", "Status Response  -> quality=${res.quality}")
 

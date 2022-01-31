@@ -85,10 +85,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/credentials"
-        android:visibility="invisible"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="16dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_mac_address">
@@ -178,6 +178,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_save_credentials" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loading_check"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/btn_save_credentials"
+            app:layout_constraintStart_toStartOf="@+id/btn_save_credentials"
+            app:layout_constraintTop_toBottomOf="@+id/btn_save_credentials"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_url="https://assets7.lottiefiles.com/packages/lf20_x9pEKm.json" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

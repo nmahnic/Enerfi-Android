@@ -12,10 +12,11 @@ data class DeviceRegisterDataState(
 
 //VIEW EFFECT
 sealed class DeviceRegisterAction {
-    data class SetOK_GetNetworks(val macAddress: String): DeviceRegisterAction()
-    object SetFAIL_GetNetworks: DeviceRegisterAction()
-    data class SetOK_SaveCredentials(val macAddress: String): DeviceRegisterAction()
-    object SetFAIL_SaveCredentials: DeviceRegisterAction()
+    data class OkGetNetworks(val macAddress: String): DeviceRegisterAction()
+    object FailGetNetworks: DeviceRegisterAction()
+    data class OkSaveCredentials(val macAddress: String): DeviceRegisterAction()
+    object FailSaveCredentials: DeviceRegisterAction()
+    object LoadingOff: DeviceRegisterAction()
 }
 
 // VIEW EVENT

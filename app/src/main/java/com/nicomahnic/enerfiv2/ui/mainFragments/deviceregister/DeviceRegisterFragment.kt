@@ -82,30 +82,34 @@ class DeviceRegisterFragment : BaseFragment<DeviceRegisterDataState, DeviceRegis
     }
 
     override fun renderViewEffect(viewEffect: DeviceRegisterAction) {
-        Log.i("NM", "renderAction: $viewEffect")
         when(viewEffect){
-            is DeviceRegisterAction.SetOK_GetNetworks -> {
+            is DeviceRegisterAction.OkGetNetworks -> {
                 Log.d("NM", "Fragment Action -> ScannSuccess")
                 binding.tvScanNetworks.visibility = View.VISIBLE
                 binding.tvScanNetworks.text = resources.getString(R.string.success)
                 binding.credentials.visibility = View.VISIBLE
                 binding.tvMacAddress.text = viewEffect.macAddress
             }
-            is DeviceRegisterAction.SetFAIL_GetNetworks -> {
+            is DeviceRegisterAction.FailGetNetworks -> {
                 Log.d("NM", "Fragment Action -> ScanNetworksFail")
                 binding.tvScanNetworks.visibility = View.VISIBLE
                 binding.tvScanNetworks.text = resources.getString(R.string.fail)
             }
-            is DeviceRegisterAction.SetOK_SaveCredentials -> {
+            is DeviceRegisterAction.OkSaveCredentials -> {
                 Log.d("NM", "Fragment Action -> SaveCredentialsSuccess")
                 binding.tvSaveCredentials.visibility = View.VISIBLE
                 binding.tvScanNetworks.text = resources.getString(R.string.success)
                 binding.tvMacAddress.text = viewEffect.macAddress
+                binding.loadingCheck.visibility = View.VISIBLE
             }
-            is DeviceRegisterAction.SetFAIL_SaveCredentials -> {
+            is DeviceRegisterAction.FailSaveCredentials -> {
                 Log.d("NM", "Fragment Action -> SaveCredentialsFail")
                 binding.tvSaveCredentials.visibility = View.VISIBLE
                 binding.tvScanNetworks.text = resources.getString(R.string.fail)
+            }
+            is DeviceRegisterAction.LoadingOff -> {
+                binding.loadingCheck.visibility = View.GONE
+                binding.tvSaveCredentials.text = resources.getString(R.string.go_home)
             }
         }
     }

@@ -37,14 +37,14 @@ class DeviceRegisterVM @ViewModelInject constructor(
                         .onEach { res ->
                             when (res) {
                                 is DataState.Success -> {
-                                    viewEffect = DeviceRegisterAction.SetOK_GetNetworks(res.data.macAddress)
+                                    viewEffect = DeviceRegisterAction.OkGetNetworks(res.data.macAddress)
                                     viewState = viewState.copy(
                                         data = res.data.networks,
                                         state = DeviceRegisterState.Scanned
                                     )
                                 }
                                 is DataState.Failure -> {
-                                    viewEffect = DeviceRegisterAction.SetFAIL_GetNetworks
+                                    viewEffect = DeviceRegisterAction.FailGetNetworks
                                 }
                             }
                         }.launchIn(viewModelScope)
@@ -72,7 +72,7 @@ class DeviceRegisterVM @ViewModelInject constructor(
                     when (res) {
                         is DataState.Success -> {
                             Log.d("NM", "setCredentials Success: ${res.data}")
-                            viewEffect = DeviceRegisterAction.SetOK_SaveCredentials(res.data.macAddress)
+                            viewEffect = DeviceRegisterAction.OkSaveCredentials(res.data.macAddress)
                             viewState = viewState.copy(
                                 state = DeviceRegisterState.Connected,
                                 mac = res.data.macAddress
@@ -80,7 +80,7 @@ class DeviceRegisterVM @ViewModelInject constructor(
                         }
                         is DataState.Failure -> {
                             Log.d("NM", "setCredentials Failure: ${res.exception}")
-                            viewEffect = DeviceRegisterAction.SetFAIL_SaveCredentials
+                            viewEffect = DeviceRegisterAction.FailSaveCredentials
                         }
                     }
                 }.launchIn(viewModelScope)
@@ -95,6 +95,7 @@ class DeviceRegisterVM @ViewModelInject constructor(
                     when (res) {
                         is DataState.Success -> {
                             Log.d("NM", "setNewDevice Success: ${res.data}")
+                            viewEffect = DeviceRegisterAction.LoadingOff
                         }
                         is DataState.Failure -> {
                             Log.d("NM", "setNewDevice Failure: ${res.exception}")
