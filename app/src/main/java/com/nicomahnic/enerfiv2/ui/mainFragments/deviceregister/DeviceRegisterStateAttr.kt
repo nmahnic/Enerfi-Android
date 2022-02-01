@@ -17,6 +17,7 @@ sealed class DeviceRegisterAction {
     data class OkSaveCredentials(val macAddress: String): DeviceRegisterAction()
     object FailSaveCredentials: DeviceRegisterAction()
     object LoadingOff: DeviceRegisterAction()
+    object ErrorOn: DeviceRegisterAction()
 }
 
 // VIEW EVENT

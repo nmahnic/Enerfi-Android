@@ -111,6 +111,11 @@ class DeviceRegisterFragment : BaseFragment<DeviceRegisterDataState, DeviceRegis
                 binding.loadingCheck.visibility = View.GONE
                 binding.tvSaveCredentials.text = resources.getString(R.string.go_home)
             }
+            is DeviceRegisterAction.ErrorOn -> {
+                Log.d("NM", "Fragment Action -> ErrorOn")
+                binding.loadingCheck.visibility = View.GONE
+                binding.errorMark.visibility = View.VISIBLE
+            }
         }
     }
 

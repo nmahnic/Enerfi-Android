@@ -99,6 +99,7 @@ class DeviceRegisterVM @ViewModelInject constructor(
                         }
                         is DataState.Failure -> {
                             Log.d("NM", "setNewDevice Failure: ${res.exception}")
+                            viewEffect = DeviceRegisterAction.ErrorOn
                         }
                     }
                 }.launchIn(viewModelScope)
