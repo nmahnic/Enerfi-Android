@@ -19,6 +19,7 @@
     <string name="success">Success</string>
     <string name="fail">Fail</string>
     <string name="go_home">Go Home</string>
+    <string name="loading">Cargando</string>
 
 
     <string name="selected_item">Selected item:</string>

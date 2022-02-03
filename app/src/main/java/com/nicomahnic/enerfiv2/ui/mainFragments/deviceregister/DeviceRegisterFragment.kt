@@ -43,11 +43,13 @@ class DeviceRegisterFragment : BaseFragment<DeviceRegisterDataState, DeviceRegis
         passwd = prefs.getString("password", "")!!
 
         binding.btnScanNetworks.setOnClickListener{
+            binding.loadingScanCheck.visibility = View.VISIBLE
             responseLauncher.launch(Intent(Settings.ACTION_WIFI_SETTINGS))
         }
 
         binding.btnSaveCredentials.setOnClickListener{
             ssid =  binding.dropdownMenu.text.toString()
+            binding.loadingCheck.visibility = View.VISIBLE
             val passwd =  binding.edtPassword.text.toString()
             if(ssid.isNotBlank() && passwd.isNotBlank()) {
                 viewModel.process(DeviceRegisterEvent.SaveCredentials(ssid, passwd))
@@ -90,6 +92,7 @@ class DeviceRegisterFragment : BaseFragment<DeviceRegisterDataState, DeviceRegis
                 Log.d("NM", "Fragment Action -> ScannSuccess")
                 binding.tvScanNetworks.visibility = View.VISIBLE
                 binding.tvScanNetworks.text = resources.getString(R.string.success)
+                binding.loadingScanCheck.visibility = View.INVISIBLE
                 binding.credentials.visibility = View.VISIBLE
                 binding.tvMacAddress.text = viewEffect.macAddress
             }
@@ -100,9 +103,7 @@ class DeviceRegisterFragment : BaseFragment<DeviceRegisterDataState, DeviceRegis
             }
             is DeviceRegisterAction.OkSaveCredentials -> {
                 Log.d("NM", "Fragment Action -> SaveCredentialsSuccess")
-//                binding.tvSaveCredentials.visibility = View.VISIBLE
-//                binding.tvScanNetworks.text = resources.getString(R.string.success)
-//                binding.tvMacAddress.text = viewEffect.macAddress
+                binding.tvScanNetworks.text = resources.getString(R.string.loading)
                 binding.loadingCheck.visibility = View.VISIBLE
             }
             is DeviceRegisterAction.FailSaveCredentials -> {
@@ -111,8 +112,9 @@ class DeviceRegisterFragment : BaseFragment<DeviceRegisterDataState, DeviceRegis
                 binding.tvScanNetworks.text = resources.getString(R.string.fail)
             }
             is DeviceRegisterAction.LoadingOff -> {
-                binding.loadingCheck.visibility = View.GONE
                 binding.tvSaveCredentials.text = resources.getString(R.string.go_home)
+//                binding.tvSaveCredentials.text = resources.getString(R.string.go_home)
+                binding.loadingCheck.visibility = View.GONE
             }
             is DeviceRegisterAction.ErrorOn -> {
                 Log.d("NM", "Fragment Action -> ErrorOn")
