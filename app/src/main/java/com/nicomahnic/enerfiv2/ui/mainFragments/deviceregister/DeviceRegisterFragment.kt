@@ -11,6 +11,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import android.provider.Settings
 import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts.*
+import androidx.navigation.findNavController
 import androidx.preference.PreferenceManager
 import com.nicomahnic.enerfiv2.R
 import com.nicomahnic.enerfiv2.databinding.FragmentDeviceRegisterBinding
@@ -25,6 +26,7 @@ class DeviceRegisterFragment : BaseFragment<DeviceRegisterDataState, DeviceRegis
 ) {
 
     override val viewModel: DeviceRegisterVM by viewModels()
+    private lateinit var v: View
     private lateinit var binding: FragmentDeviceRegisterBinding
     private lateinit var ssid: String
     private lateinit var passwd: String
@@ -37,6 +39,7 @@ class DeviceRegisterFragment : BaseFragment<DeviceRegisterDataState, DeviceRegis
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentDeviceRegisterBinding.bind(view)
+        v = view
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
         mail = prefs.getString("userMail", "")!!
@@ -103,7 +106,7 @@ class DeviceRegisterFragment : BaseFragment<DeviceRegisterDataState, DeviceRegis
             }
             is DeviceRegisterAction.OkSaveCredentials -> {
                 Log.d("NM", "Fragment Action -> SaveCredentialsSuccess")
-                binding.tvScanNetworks.text = resources.getString(R.string.loading)
+                binding.tvSaveCredentials.text = resources.getString(R.string.loading)
                 binding.loadingCheck.visibility = View.VISIBLE
             }
             is DeviceRegisterAction.FailSaveCredentials -> {
@@ -113,8 +116,9 @@ class DeviceRegisterFragment : BaseFragment<DeviceRegisterDataState, DeviceRegis
             }
             is DeviceRegisterAction.LoadingOff -> {
                 binding.tvSaveCredentials.text = resources.getString(R.string.go_home)
-//                binding.tvSaveCredentials.text = resources.getString(R.string.go_home)
                 binding.loadingCheck.visibility = View.GONE
+                val action = DeviceRegisterFragmentDirections.actionDeviceRegisterFragmentToHomeFragment()
+                v.findNavController().navigate(action)
             }
             is DeviceRegisterAction.ErrorOn -> {
                 Log.d("NM", "Fragment Action -> ErrorOn")
