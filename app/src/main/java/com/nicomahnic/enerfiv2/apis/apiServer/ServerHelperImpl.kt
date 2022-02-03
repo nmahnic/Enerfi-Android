@@ -1,5 +1,6 @@
 package com.nicomahnic.enerfiv2.apis.apiServer
 
+import android.util.Log
 import com.nicomahnic.enerfiv2.apis.apiServer.networkModels.*
 import javax.inject.Inject
 
@@ -25,6 +26,10 @@ class ServerHelperImpl @Inject constructor(
 
     override suspend fun postFetchRemoteMeasures(req: PostUserAndDumRequestNetworkEntity) : List<MeasureByEmailAndDumResponseNetworkEntity>{
         return apiService.postFetchRemoteMeasures(req)
+    }
+
+    override suspend fun postDeleteDeviceByEmailRequest(req: PostUserAndDumRequestNetworkEntity) : GeneralResponseNetworkEntity {
+        return apiService.postDeleteDeviceByEmailRequest(req)
     }
 
 }

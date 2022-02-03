@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nicomahnic.enerfiv2.R
@@ -41,20 +40,37 @@ class HomeFragment : BaseFragment<HomeDataState, HomeAction, HomeEvent, HomeVM>
     private fun initReycleView(devices: List<DevicesByEmailResponse>){
         val recyclerView = binding.rvDevices
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = DeviceAdapter(devices) { pos, device -> onItemSelected(pos,device) }
+        ItemListener.mail = mail
+        ItemListener.passwd = passwd
+        ItemListener.viewModel = viewModel
+        recyclerView.adapter = DeviceAdapter(devices, ItemListener)
     }
 
-    private fun onItemSelected(pos: Int, device: DevicesByEmailResponse){
-        val action = HomeFragmentDirections.actionHomeFragmentToMeasureFragment(
-            mac = device.mac, name = device.name, mail = mail, passwd = passwd
-        )
-        v.findNavController().navigate(action)
+    object ItemListener: DeviceAdapter.OnBookClickListener {
+        lateinit var mail: String
+        lateinit var passwd: String
+        lateinit var viewModel: HomeVM
+
+        override fun onItemClick(position: Int, device: DevicesByEmailResponse) {
+            val action = HomeFragmentDirections.actionHomeFragmentToMeasureFragment(
+                mac = device.mac, name = device.name, mail = mail, passwd = passwd
+            )
+            viewModel.process(HomeEvent.Navigate(action))
+        }
+
+        override fun onDeleteItemClick(position: Int, device: DevicesByEmailResponse) {
+            viewModel.process(HomeEvent.DeleteItem(mail, passwd, device))
+        }
+
     }
 
     override fun renderViewState(viewState: HomeDataState) {
         when(viewState.state){
             is HomeState.Devices -> {
                 initReycleView(viewState.data!!)
+            }
+            is HomeState.NavigateTo -> {
+                v.findNavController().navigate(viewState.action!!)
             }
             else -> {
                 Log.d("NM", "${viewState.state}")

@@ -1,5 +1,6 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_package_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -36,6 +37,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_baseline_electrical_services_24" />
+
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DELETE"
+            app:icon="@drawable/ic_baseline_delete_24"
+            app:layout_constraintBottom_toBottomOf="@+id/img_item"
+            app:layout_constraintStart_toStartOf="@+id/tvDeviceName"
+            app:layout_constraintTop_toBottomOf="@+id/tvDeviceName" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

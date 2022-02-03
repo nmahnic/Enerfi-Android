@@ -10,8 +10,13 @@ import com.nicomahnic.enerfiv2.model.server.response.DevicesByEmailResponse
 
 class DeviceAdapter(
     private val devices : List<DevicesByEmailResponse>,
-    private val onItemClick: (Int, DevicesByEmailResponse) -> Unit
+    private val itemClickListener: OnBookClickListener
 ) : RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder>() {
+
+    interface OnBookClickListener {
+        fun onItemClick(position: Int, device: DevicesByEmailResponse)
+        fun onDeleteItemClick(position: Int, device: DevicesByEmailResponse)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeviceViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -34,8 +39,9 @@ class DeviceAdapter(
             binding.tvDeviceName.text = device.name
         }
 
-        fun getItem (device: DevicesByEmailResponse, position: Int): Unit {
-            return itemView.setOnClickListener { onItemClick(position, device) }
+        fun getItem (device: DevicesByEmailResponse, position: Int) {
+            itemView.setOnClickListener { itemClickListener.onItemClick(position, device) }
+            binding.btnDelete.setOnClickListener { itemClickListener.onDeleteItemClick(position, device) }
         }
     }
 

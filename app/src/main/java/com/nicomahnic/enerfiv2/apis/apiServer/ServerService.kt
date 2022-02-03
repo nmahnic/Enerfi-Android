@@ -24,4 +24,8 @@ interface ServerService {
     @Headers("Content-Type: application/json")
     @POST("/listmeasurebyuser/")
     suspend fun postFetchRemoteMeasures(@Body req: PostUserAndDumRequestNetworkEntity) : List<MeasureByEmailAndDumResponseNetworkEntity>
+
+    @Headers("Content-Type: application/json")
+    @POST("/deleteitem/")
+    suspend fun postDeleteDeviceByEmailRequest(@Body req: PostUserAndDumRequestNetworkEntity) : GeneralResponseNetworkEntity
 }

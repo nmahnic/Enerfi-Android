@@ -14,4 +14,6 @@ interface ServerHelper {
 
     suspend fun postFetchRemoteMeasures(req: PostUserAndDumRequestNetworkEntity) : List<MeasureByEmailAndDumResponseNetworkEntity>
 
+    suspend fun postDeleteDeviceByEmailRequest(req: PostUserAndDumRequestNetworkEntity) : GeneralResponseNetworkEntity
+
 }
