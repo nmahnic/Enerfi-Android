@@ -31,5 +31,5 @@ sealed class DeviceRegisterEvent {
 sealed class DeviceRegisterState {
     object Initial: DeviceRegisterState()
     object Scanned: DeviceRegisterState()
-    object Connected: DeviceRegisterState()
+    object ESPhasSavedCredentials: DeviceRegisterState()
 }

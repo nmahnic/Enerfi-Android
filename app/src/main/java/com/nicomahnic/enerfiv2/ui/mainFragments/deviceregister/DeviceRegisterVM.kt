@@ -74,7 +74,7 @@ class DeviceRegisterVM @ViewModelInject constructor(
                             Log.d("NM", "setCredentials Success: ${res.data}")
                             viewEffect = DeviceRegisterAction.OkSaveCredentials(res.data.macAddress)
                             viewState = viewState.copy(
-                                state = DeviceRegisterState.Connected,
+                                state = DeviceRegisterState.ESPhasSavedCredentials,
                                 mac = res.data.macAddress
                             )
                         }

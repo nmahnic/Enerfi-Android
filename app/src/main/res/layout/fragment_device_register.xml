@@ -195,8 +195,8 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/error_mark"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
             android:layout_marginTop="8dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"

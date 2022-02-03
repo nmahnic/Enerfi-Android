@@ -63,8 +63,11 @@ class DeviceRegisterFragment : BaseFragment<DeviceRegisterDataState, DeviceRegis
                     binding.dropdownMenu.setAdapter(adapter)
                 }
             }
-            is DeviceRegisterState.Connected -> {
-                Utils.checkForInternet(requireContext())
+            is DeviceRegisterState.ESPhasSavedCredentials -> {
+                while(Utils.isOnline(requireContext())){
+                    Log.d("NM", "INTERNET ${Utils.isOnline(requireContext())}")
+                    Thread.sleep(1000)
+                }
                 Handler().postDelayed({
                     viewModel.process(
                         DeviceRegisterEvent.SetNewDevice(
@@ -73,7 +76,7 @@ class DeviceRegisterFragment : BaseFragment<DeviceRegisterDataState, DeviceRegis
                             passwd = passwd,
                             mail = mail
                         ))
-                },10000)
+                },1000)
             }
             else -> {
                 Log.d("NM", "DeviceRegister VIEW STATE -> NOT DEFINED")
@@ -97,9 +100,9 @@ class DeviceRegisterFragment : BaseFragment<DeviceRegisterDataState, DeviceRegis
             }
             is DeviceRegisterAction.OkSaveCredentials -> {
                 Log.d("NM", "Fragment Action -> SaveCredentialsSuccess")
-                binding.tvSaveCredentials.visibility = View.VISIBLE
-                binding.tvScanNetworks.text = resources.getString(R.string.success)
-                binding.tvMacAddress.text = viewEffect.macAddress
+//                binding.tvSaveCredentials.visibility = View.VISIBLE
+//                binding.tvScanNetworks.text = resources.getString(R.string.success)
+//                binding.tvMacAddress.text = viewEffect.macAddress
                 binding.loadingCheck.visibility = View.VISIBLE
             }
             is DeviceRegisterAction.FailSaveCredentials -> {
