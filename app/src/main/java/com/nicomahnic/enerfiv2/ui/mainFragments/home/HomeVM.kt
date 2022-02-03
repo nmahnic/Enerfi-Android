@@ -52,6 +52,9 @@ class HomeVM @ViewModelInject constructor(
                     when(res){
                         is DataState.Success -> {
                             Log.d("NM", "postDeleteDeviceByEmail Success: ${res.data}")
+                            viewState = viewState.copy(
+                                state = HomeState.ItemDeleted,
+                            )
                         }
                         is DataState.Failure -> {
                             Log.d("NM", "postDeleteDeviceByEmail Failure: ${res.exception}")

@@ -72,6 +72,9 @@ class HomeFragment : BaseFragment<HomeDataState, HomeAction, HomeEvent, HomeVM>
             is HomeState.NavigateTo -> {
                 v.findNavController().navigate(viewState.action!!)
             }
+            is HomeState.ItemDeleted -> {
+                viewModel.process(HomeEvent.GetDevices(mail,passwd))
+            }
             else -> {
                 Log.d("NM", "${viewState.state}")
             }
