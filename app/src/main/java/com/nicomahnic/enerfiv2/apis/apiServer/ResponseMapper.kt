@@ -66,7 +66,8 @@ class MeasureByEmailAndDumResponseMapper @Inject constructor():
             irms = entity.irms,
             activePower = entity.activePower,
             powerFactor = "%.2f".format(entity.powerFactor*100)+"%",
-            thd = "%.2f".format(entity.thd*100)+"%",
+            thd_i = "%.2f".format(entity.thd_i*100)+"%",
+            thd_v = "%.2f".format(entity.thd_v*100)+"%",
             cosPhi = "%.2f".format(entity.cosPhi*100)+"%",
             timeStamp = entity.timeStamp
         )
@@ -78,7 +79,8 @@ class MeasureByEmailAndDumResponseMapper @Inject constructor():
             irms = domainModel.irms,
             activePower = domainModel.activePower,
             powerFactor = 0F,
-            thd = 0F,
+            thd_i = 0F,
+            thd_v = 0F,
             cosPhi = 0F,
             timeStamp = domainModel.timeStamp
         )

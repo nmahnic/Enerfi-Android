@@ -35,20 +35,25 @@ class MeasureFragment : BaseFragment<MeasureDataState, MeasureAction, MeasureEve
     override fun renderViewState(viewState: MeasureDataState) {
         when (viewState.state) {
             is MeasureState.Plot -> {
-                binding.edtCosPhi.setText(viewState.cosPhi)
-                binding.edtThd.setText(viewState.thd)
-                binding.edtPf.setText(viewState.powerFactor)
-                binding.constraintLayout2.visibility = View.VISIBLE
+                val itemsValues = listOf(
+                    ItemValue(viewState.cosPhi ?: "", "cos  \u03D5"),
+                    ItemValue(viewState.thd_i ?: "", "THD I"),
+                    ItemValue(viewState.thd_v ?: "", "THD V"),
+                    ItemValue(viewState.powerFactor ?: "", "Power Factor"),
+                )
+
+                val recyclerView1 = binding.rvItemValues
+                recyclerView1.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL, false)
+                recyclerView1.adapter = ItemValueAdapter(itemsValues)
 
                 val charts = listOf(
                     MeasureChart(viewState.voltage, "V", "Voltage:", viewState.timeStamp),
                     MeasureChart(viewState.current, "A", "Current:", viewState.timeStamp),
                     MeasureChart(viewState.activePower, "W", "Power:", viewState.timeStamp),
                 )
-                val recyclerView = binding.rvMeasures
-//                recyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL, false)
-                recyclerView.layoutManager = LinearLayoutManager(context)
-                recyclerView.adapter = MeasureAdapter(charts, resources)
+                val recyclerView2 = binding.rvMeasures
+                recyclerView2.layoutManager = LinearLayoutManager(context)
+                recyclerView2.adapter = MeasureAdapter(charts, resources)
             }
             else -> {
                 Log.d("NM", "${viewState.state}")

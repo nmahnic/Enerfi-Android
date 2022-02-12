@@ -47,7 +47,8 @@ class MeasureVM @ViewModelInject constructor(
                                 activePower = res.data.mapIndexed { index, measure -> Entry(index.toFloat(), measure.activePower) },
                                 timeStamp = timestamp,
                                 cosPhi = res.data.last().cosPhi,
-                                thd = res.data.last().thd,
+                                thd_i = res.data.last().thd_i,
+                                thd_v = res.data.last().thd_v,
                                 powerFactor = res.data.last().powerFactor
                             )
                         }

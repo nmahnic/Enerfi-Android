@@ -20,9 +20,12 @@ data class MeasureByEmailAndDumResponseNetworkEntity (
         @SerializedName("pf")
         @Expose
         val powerFactor: Float,
-        @SerializedName("thd")
+        @SerializedName("thd_i")
         @Expose
-        val thd: Float,
+        val thd_i: Float,
+        @SerializedName("thd_v")
+        @Expose
+        val thd_v: Float,
         @SerializedName("cos_phi")
         @Expose
         val cosPhi: Float,

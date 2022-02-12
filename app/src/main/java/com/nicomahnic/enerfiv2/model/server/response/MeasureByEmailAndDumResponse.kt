@@ -5,7 +5,8 @@ data class MeasureByEmailAndDumResponse(
     val irms: Float,
     val activePower: Float,
     val powerFactor: String,
-    val thd: String,
+    val thd_i: String,
+    val thd_v: String,
     val cosPhi: String,
     val timeStamp: String
 )
