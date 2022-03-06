@@ -55,6 +55,7 @@ class DeviceRegisterVM @ViewModelInject constructor(
                 setCredentials(viewEvent.ssid, viewEvent.passwd)
             }
             is DeviceRegisterEvent.SetNewDevice -> {
+                Thread.sleep(3000)
                 Log.d("NM","event: SetNewDevice -> deviceName:${viewEvent.deviceName}")
                 Log.d("NM","event: SetNewDevice -> mac:${viewEvent.mac}")
                 Log.d("NM","event: SetNewDevice -> mail:${viewEvent.mail}")

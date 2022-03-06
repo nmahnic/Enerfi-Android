@@ -6,5 +6,5 @@ object Constants {
 //    const val SERVER_URL = "http://192.168.0.122:3000"
 //    const val SERVER_URL = "http://192.168.0.123:5000"
 //    const val SERVER_URL = "http://192.168.0.121:5000"
-    const val SERVER_URL = "http://192.168.0.119:5000"
+    const val SERVER_URL = "http://192.168.0.134:5000"
 }
